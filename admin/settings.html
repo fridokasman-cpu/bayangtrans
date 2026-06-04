@@ -1,638 +1,165 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pengaturan - BayangTrans Admin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="../js/admin-data.js"></script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Poppins', sans-serif; background: #f3f4f6; min-height: 100vh; display: flex; }
-        
-        /* Sidebar */
-        .sidebar {
-            width: 280px;
-            background: linear-gradient(180deg, #1f2937 0%, #111827 100%);
-            color: white;
-            padding: 30px 20px;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-            box-shadow: 4px 0 20px rgba(0,0,0,0.1);
-            z-index: 1000;
-        }
-        
-        .sidebar-logo { text-align: center; padding-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 25px; }
-        .sidebar-logo .logo-text {
-            font-size: 1.8rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .sidebar-logo p { color: #9ca3af; font-size: 0.85rem; margin-top: 5px; }
-        
-        .admin-profile {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 15px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 12px;
-            margin-bottom: 25px;
-        }
-        
-        .admin-avatar {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
-        
-        .admin-info h4 { font-size: 0.95rem; margin-bottom: 2px; }
-        .admin-info p { font-size: 0.75rem; color: #9ca3af; }
-        
-        .nav-section-title {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: #6b7280;
-            margin: 20px 0 10px;
-            padding-left: 15px;
-            letter-spacing: 1px;
-            font-weight: 600;
-        }
-        
-        .sidebar-nav a {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 15px;
-            color: #d1d5db;
-            text-decoration: none;
-            border-radius: 10px;
-            margin-bottom: 5px;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
-        }
-        
-        .sidebar-nav a:hover, .sidebar-nav a.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            transform: translateX(5px);
-        }
-        
-        .sidebar-nav a i { width: 20px; text-align: center; }
-        
-        .sidebar-nav .badge {
-            margin-left: auto;
-            background: #ef4444;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 700;
-        }
-        
-        /* Main */
-        .main-content { margin-left: 280px; padding: 30px; flex: 1; width: calc(100% - 280px); }
-        
-        .top-bar {
-            background: white;
-            padding: 20px 30px;
-            border-radius: 16px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .top-bar h1 { font-size: 1.8rem; color: #1f2937; font-weight: 700; }
-        .top-bar .breadcrumb { color: #6b7280; font-size: 0.9rem; margin-top: 5px; }
-        .top-bar .breadcrumb a { color: #667eea; text-decoration: none; }
-        
-        /* Tabs */
-        .tabs-container { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .tabs-header { display: flex; background: #f9fafb; border-bottom: 2px solid #e5e7eb; }
-        
-        .tab-btn {
-            flex: 1;
-            padding: 18px 20px;
-            background: none;
-            border: none;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #6b7280;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .tab-btn:hover { color: #667eea; background: rgba(102, 126, 234, 0.05); }
-        .tab-btn.active { color: #667eea; background: white; border-bottom: 3px solid #667eea; margin-bottom: -2px; }
-        
-        .tab-content { display: none; padding: 30px; animation: fadeIn 0.4s ease; }
-        .tab-content.active { display: block; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .info-box {
-            background: linear-gradient(135deg, #eff6ff, #dbeafe);
-            border-left: 4px solid #667eea;
-            padding: 18px 22px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: start;
-            gap: 15px;
-        }
-        
-        .info-box i { color: #667eea; font-size: 1.3rem; margin-top: 2px; }
-        .info-box h4 { color: #1e40af; margin-bottom: 5px; font-size: 1rem; }
-        .info-box p { color: #374151; font-size: 0.9rem; line-height: 1.6; }
-        
-        .section-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin: 40px 0 20px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #e5e7eb;
-        }
-        
-        .section-title:first-child { margin-top: 0; }
-        
-        .section-title .icon-box {
-            width: 45px;
-            height: 45px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-        }
-        
-        .section-title.motor .icon-box { background: linear-gradient(135deg, #10b981, #059669); }
-        .section-title.mobil .icon-box { background: linear-gradient(135deg, #f59e0b, #d97706); }
-        
-        .section-title h2 { font-size: 1.3rem; color: #1f2937; font-weight: 700; }
-        .section-title p { font-size: 0.85rem; color: #6b7280; }
-        
-        .vehicle-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        
-        .vehicle-card {
-            background: white;
-            border: 2px solid #e5e7eb;
-            border-radius: 16px;
-            padding: 20px;
-            transition: all 0.3s ease;
-        }
-        
-        .vehicle-card:hover {
-            border-color: #667eea;
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.15);
-        }
-        
-        .vehicle-card.available { border-color: #10b981; background: linear-gradient(135deg, #f0fdf4, #ffffff); }
-        .vehicle-card.unavailable { border-color: #ef4444; background: linear-gradient(135deg, #fef2f2, #ffffff); opacity: 0.8; }
-        
-        .vehicle-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: 15px;
-        }
-        
-        .vehicle-name { font-size: 1.1rem; font-weight: 700; color: #1f2937; margin-bottom: 5px; }
-        
-        .vehicle-type {
-            display: inline-block;
-            padding: 3px 10px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 600;
-        }
-        
-        .vehicle-card.motor .vehicle-type { background: linear-gradient(135deg, #10b981, #059669); }
-        .vehicle-card.mobil .vehicle-type { background: linear-gradient(135deg, #f59e0b, #d97706); }
-        
-        .status-toggle {
-            width: 50px;
-            height: 28px;
-            background: #ef4444;
-            border-radius: 50px;
-            position: relative;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            flex-shrink: 0;
-        }
-        
-        .status-toggle.active { background: #10b981; }
-        
-        .status-toggle::after {
-            content: '';
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 22px;
-            height: 22px;
-            background: white;
-            border-radius: 50%;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        
-        .status-toggle.active::after { left: 25px; }
-        
-        .vehicle-price {
-            font-size: 1.4rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
-        }
-        
-        .vehicle-features { list-style: none; margin-bottom: 15px; }
-        .vehicle-features li { font-size: 0.85rem; color: #6b7280; padding: 4px 0; display: flex; align-items: center; gap: 8px; }
-        .vehicle-features li i { color: #10b981; font-size: 0.8rem; }
-        
-        .price-edit { margin-top: 15px; padding-top: 15px; border-top: 1px dashed #e5e7eb; }
-        .price-edit label { display: block; font-size: 0.85rem; color: #6b7280; margin-bottom: 8px; font-weight: 600; }
-        
-        .price-input-group { display: flex; gap: 10px; }
-        
-        .price-input {
-            flex: 1;
-            padding: 10px 12px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 600;
-        }
-        
-        .price-input:focus { outline: none; border-color: #667eea; }
-        
-        .btn-save {
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-save:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4); }
-        
-        .share-section {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            padding: 30px;
-            border-radius: 16px;
-            color: white;
-            text-align: center;
-            margin-top: 40px;
-        }
-        
-        .share-section h3 { font-size: 1.3rem; margin-bottom: 10px; }
-        .share-section p { opacity: 0.95; margin-bottom: 20px; font-size: 0.95rem; }
-        
-        .btn-share {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: white;
-            color: #667eea;
-            padding: 14px 35px;
-            border-radius: 50px;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        
-        .btn-share:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
-            display: none;
-            align-items: center;
-            gap: 12px;
-            font-weight: 600;
-            z-index: 9999;
-            animation: slideIn 0.4s ease;
-        }
-        
-        .toast.show { display: flex; }
-        
-        @keyframes slideIn {
-            from { transform: translateX(400px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        
-        @media (max-width: 768px) {
-            .sidebar { width: 100%; height: auto; position: relative; }
-            .main-content { margin-left: 0; width: 100%; padding: 20px; }
-            body { flex-direction: column; }
-            .vehicle-grid { grid-template-columns: 1fr; }
-        }
-    </style>
-</head>
-<body>
+<script src="../js/api.js"></script>
+<script>
+    let allKendaraan = [];
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <div class="sidebar-logo">
-            <div class="logo-text">Bayang<span style="color: #f59e0b;">Trans</span></div>
-            <p>Admin Panel</p>
-        </div>
-        
-        <div class="admin-profile">
-            <div class="admin-avatar">A</div>
-            <div class="admin-info">
-                <h4 id="admin-name">Administrator</h4>
-                <p>Super Admin</p>
-            </div>
-        </div>
-        
-        <div class="nav-section-title">Menu Utama</div>
-        <nav class="sidebar-nav">
-            <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
-            <a href="settings.html" class="active"><i class="fas fa-cog"></i> Pengaturan</a>
-        </nav>
-        
-        <div class="nav-section-title">Lainnya</div>
-        <nav class="sidebar-nav">
-            <a href="../index.html" target="_blank"><i class="fas fa-external-link-alt"></i> Lihat Website</a>
-            <a href="#" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </nav>
-    </aside>
-
-    <!-- MAIN -->
-    <main class="main-content">
-        <div class="top-bar">
-            <div>
-                <h1><i class="fas fa-cog" style="color: #667eea;"></i> Pengaturan Kendaraan</h1>
-                <div class="breadcrumb">
-                    <a href="dashboard.html">Admin</a> / Pengaturan
-                </div>
-            </div>
-        </div>
-
-        <div class="tabs-container">
-            <div class="tabs-header">
-                <button class="tab-btn active" data-tab="ketersediaan">
-                    <i class="fas fa-toggle-on"></i> Ketersediaan
-                </button>
-                <button class="tab-btn" data-tab="harga-motor">
-                    <i class="fas fa-motorcycle"></i> Harga Motor
-                </button>
-                <button class="tab-btn" data-tab="harga-mobil">
-                    <i class="fas fa-car"></i> Harga Mobil
-                </button>
-            </div>
-
-            <!-- Tab: Ketersediaan -->
-            <div class="tab-content active" id="ketersediaan">
-                <div class="info-box">
-                    <i class="fas fa-info-circle"></i>
-                    <div>
-                        <h4>Kelola Ketersediaan Kendaraan</h4>
-                        <p>Klik tombol untuk mengubah status. Perubahan akan langsung tampil di website publik.</p>
-                    </div>
-                </div>
-
-                <div class="section-title motor">
-                    <div class="icon-box"><i class="fas fa-motorcycle"></i></div>
-                    <div><h2>Motor</h2><p>Kelola ketersediaan motor</p></div>
-                </div>
-                <div class="vehicle-grid" id="motor-ketersediaan"></div>
-
-                <div class="section-title mobil">
-                    <div class="icon-box"><i class="fas fa-car"></i></div>
-                    <div><h2>Mobil</h2><p>Kelola ketersediaan mobil</p></div>
-                </div>
-                <div class="vehicle-grid" id="mobil-ketersediaan"></div>
-
-                <div class="share-section">
-                    <h3><i class="fas fa-share-alt"></i> Bagikan Status Ketersediaan</h3>
-                    <p>Kirim update kendaraan yang tersedia ke WhatsApp pelanggan</p>
-                    <button class="btn-share" onclick="shareAvailability()">
-                        <i class="fab fa-whatsapp"></i> Bagikan via WhatsApp
-                    </button>
-                </div>
-            </div>
-
-            <!-- Tab: Harga Motor -->
-            <div class="tab-content" id="harga-motor">
-                <div class="info-box">
-                    <i class="fas fa-tags"></i>
-                    <div>
-                        <h4>Kelola Harga Sewa Motor</h4>
-                        <p>Ubah harga sewa per hari. Perubahan akan langsung berlaku di website.</p>
-                    </div>
-                </div>
-                <div class="section-title motor">
-                    <div class="icon-box"><i class="fas fa-motorcycle"></i></div>
-                    <div><h2>Daftar Harga Motor</h2><p>Semua harga per hari</p></div>
-                </div>
-                <div class="vehicle-grid" id="motor-harga"></div>
-            </div>
-
-            <!-- Tab: Harga Mobil -->
-            <div class="tab-content" id="harga-mobil">
-                <div class="info-box">
-                    <i class="fas fa-tags"></i>
-                    <div>
-                        <h4>Kelola Harga Sewa Mobil</h4>
-                        <p>Ubah harga sewa per hari. Perubahan akan langsung berlaku di website.</p>
-                    </div>
-                </div>
-                <div class="section-title mobil">
-                    <div class="icon-box"><i class="fas fa-car"></i></div>
-                    <div><h2>Daftar Harga Mobil</h2><p>Semua harga per hari</p></div>
-                </div>
-                <div class="vehicle-grid" id="mobil-harga"></div>
-            </div>
-        </div>
-    </main>
-
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toast-message">Status berhasil diperbarui!</span>
-    </div>
-
-    <script>
-        // Cek login
-        if (!isAdminLoggedIn()) {
+    // Cek login
+    async function checkAuth() {
+        const status = await checkLoginStatus();
+        if (!status.logged_in) {
             window.location.href = 'login.html';
         } else {
-            document.getElementById('admin-name').textContent = sessionStorage.getItem('admin_username') || 'Administrator';
+            document.getElementById('admin-name').textContent = status.admin.nama;
         }
+    }
 
-        function doLogout() {
-            if (confirm('Yakin ingin logout?')) {
-                logoutAdmin();
-                window.location.href = 'login.html';
-            }
-        }
+    // Load data dari database
+    async function loadData() {
+        allKendaraan = await getKendaraanFromDB();
+        renderAll();
+    }
 
-        // Tab Switching
-        document.querySelectorAll('.tab-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                btn.classList.add('active');
-                document.getElementById(btn.dataset.tab).classList.add('active');
-            });
-        });
+    // Render semua
+    function renderAll() {
+        const motor = allKendaraan.filter(k => k.tipe === 'Motor');
+        const mobil = allKendaraan.filter(k => k.tipe === 'Mobil');
+        
+        document.getElementById('motor-ketersediaan').innerHTML = 
+            motor.map(m => renderKetersediaanCard(m, 'motor')).join('');
+        
+        document.getElementById('mobil-ketersediaan').innerHTML = 
+            mobil.map(m => renderKetersediaanCard(m, 'mobil')).join('');
+        
+        document.getElementById('motor-harga').innerHTML = 
+            motor.map(m => renderHargaCard(m, 'motor')).join('');
+        
+        document.getElementById('mobil-harga').innerHTML = 
+            mobil.map(m => renderHargaCard(m, 'mobil')).join('');
+    }
 
-        function renderKetersediaanCard(item, type) {
-            return `
-                <div class="vehicle-card ${type} ${item.tersedia ? 'available' : 'unavailable'}" data-id="${item.id}">
-                    <div class="vehicle-header">
-                        <div>
-                            <div class="vehicle-name">${item.nama}</div>
-                            <span class="vehicle-type">${type === 'motor' ? 'Motor' : 'Mobil'}</span>
-                        </div>
-                        <div class="status-toggle ${item.tersedia ? 'active' : ''}" onclick="toggleStatus(${item.id}, this)"></div>
+    function renderKetersediaanCard(item, type) {
+        return `
+            <div class="vehicle-card ${type} ${item.tersedia ? 'available' : 'unavailable'}" data-id="${item.id}">
+                <div class="vehicle-header">
+                    <div>
+                        <div class="vehicle-name">${item.nama}</div>
+                        <span class="vehicle-type">${type === 'motor' ? 'Motor' : 'Mobil'}</span>
                     </div>
-                    <div class="vehicle-price">Rp ${item.harga.toLocaleString('id-ID')}<span style="font-size: 0.8rem; font-weight: 500;">/hari</span></div>
-                    <ul class="vehicle-features">
-                        ${item.fitur.map(f => `<li><i class="fas fa-check-circle"></i> ${f}</li>`).join('')}
-                    </ul>
-                    <span style="font-size: 0.85rem; font-weight: 600; color: ${item.tersedia ? '#059669' : '#dc2626'};">
-                        ${item.tersedia ? '✓ Tersedia' : '✗ Tidak Tersedia'}
-                    </span>
+                    <div class="status-toggle ${item.tersedia ? 'active' : ''}" onclick="toggleStatus(${item.id}, this)"></div>
                 </div>
-            `;
-        }
+                <div class="vehicle-price">Rp ${item.harga.toLocaleString('id-ID')}<span style="font-size: 0.8rem; font-weight: 500;">/hari</span></div>
+                <ul class="vehicle-features">
+                    ${item.fitur.map(f => `<li><i class="fas fa-check-circle"></i> ${f}</li>`).join('')}
+                </ul>
+                <span style="font-size: 0.85rem; font-weight: 600; color: ${item.tersedia ? '#059669' : '#dc2626'};">
+                    ${item.tersedia ? '✓ Tersedia' : '✗ Tidak Tersedia'}
+                </span>
+            </div>
+        `;
+    }
 
-        function renderHargaCard(item, type) {
-            return `
-                <div class="vehicle-card ${type}" data-id="${item.id}">
-                    <div class="vehicle-header">
-                        <div>
-                            <div class="vehicle-name">${item.nama}</div>
-                            <span class="vehicle-type">${type === 'motor' ? 'Motor' : 'Mobil'}</span>
-                        </div>
-                    </div>
-                    <div class="vehicle-price" id="price-display-${item.id}">Rp ${item.harga.toLocaleString('id-ID')}<span style="font-size: 0.8rem; font-weight: 500;">/hari</span></div>
-                    <ul class="vehicle-features">
-                        ${item.fitur.map(f => `<li><i class="fas fa-check-circle"></i> ${f}</li>`).join('')}
-                    </ul>
-                    <div class="price-edit">
-                        <label><i class="fas fa-edit"></i> Ubah Harga</label>
-                        <div class="price-input-group">
-                            <input type="number" class="price-input" id="price-input-${item.id}" value="${item.harga}" placeholder="Masukkan harga">
-                            <button class="btn-save" onclick="savePrice(${item.id})">
-                                <i class="fas fa-save"></i> Simpan
-                            </button>
-                        </div>
+    function renderHargaCard(item, type) {
+        return `
+            <div class="vehicle-card ${type}" data-id="${item.id}">
+                <div class="vehicle-header">
+                    <div>
+                        <div class="vehicle-name">${item.nama}</div>
+                        <span class="vehicle-type">${type === 'motor' ? 'Motor' : 'Mobil'}</span>
                     </div>
                 </div>
-            `;
-        }
+                <div class="vehicle-price" id="price-display-${item.id}">Rp ${item.harga.toLocaleString('id-ID')}<span style="font-size: 0.8rem; font-weight: 500;">/hari</span></div>
+                <ul class="vehicle-features">
+                    ${item.fitur.map(f => `<li><i class="fas fa-check-circle"></i> ${f}</li>`).join('')}
+                </ul>
+                <div class="price-edit">
+                    <label><i class="fas fa-edit"></i> Ubah Harga</label>
+                    <div class="price-input-group">
+                        <input type="number" class="price-input" id="price-input-${item.id}" value="${item.harga}" placeholder="Masukkan harga">
+                        <button class="btn-save" onclick="savePrice(${item.id})">
+                            <i class="fas fa-save"></i> Simpan
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
 
-        function renderAll() {
-            const data = getKendaraan();
-            document.getElementById('motor-ketersediaan').innerHTML = data.motor.map(m => renderKetersediaanCard(m, 'motor')).join('');
-            document.getElementById('mobil-ketersediaan').innerHTML = data.mobil.map(m => renderKetersediaanCard(m, 'mobil')).join('');
-            document.getElementById('motor-harga').innerHTML = data.motor.map(m => renderHargaCard(m, 'motor')).join('');
-            document.getElementById('mobil-harga').innerHTML = data.mobil.map(m => renderHargaCard(m, 'mobil')).join('');
-        }
-
-        function toggleStatus(id, element) {
-            const card = element.closest('.vehicle-card');
-            const isActive = element.classList.contains('active');
-            updateKetersediaan(id, !isActive);
-            
-            if (!isActive) {
+    async function toggleStatus(id, element) {
+        const card = element.closest('.vehicle-card');
+        const isActive = element.classList.contains('active');
+        const newStatus = !isActive;
+        
+        const result = await updateKetersediaan(id, newStatus);
+        
+        if (result.success) {
+            // Update UI
+            if (newStatus) {
                 element.classList.add('active');
                 card.classList.remove('unavailable');
                 card.classList.add('available');
                 card.querySelector('span:last-child').innerHTML = '✓ Tersedia';
                 card.querySelector('span:last-child').style.color = '#059669';
-                showToast('Kendaraan sekarang tersedia!');
             } else {
                 element.classList.remove('active');
                 card.classList.remove('available');
                 card.classList.add('unavailable');
                 card.querySelector('span:last-child').innerHTML = '✗ Tidak Tersedia';
                 card.querySelector('span:last-child').style.color = '#dc2626';
-                showToast('Kendaraan ditandai tidak tersedia');
             }
+            showToast(newStatus ? 'Kendaraan sekarang tersedia!' : 'Kendaraan ditandai tidak tersedia');
+        } else {
+            showToast('Gagal memperbarui status!', 'error');
         }
+    }
 
-        function savePrice(id) {
-            const input = document.getElementById(`price-input-${id}`);
-            const newPrice = parseInt(input.value);
-            if (newPrice > 0) {
-                updateHarga(id, newPrice);
+    async function savePrice(id) {
+        const input = document.getElementById(`price-input-${id}`);
+        const newPrice = parseInt(input.value);
+        
+        if (newPrice > 0) {
+            const result = await updateHarga(id, newPrice);
+            if (result.success) {
                 document.getElementById(`price-display-${id}`).innerHTML = 
                     `Rp ${newPrice.toLocaleString('id-ID')}<span style="font-size: 0.8rem; font-weight: 500;">/hari</span>`;
                 showToast(`Harga berhasil diperbarui menjadi Rp ${newPrice.toLocaleString('id-ID')}`);
             } else {
-                showToast('Harga tidak valid!');
+                showToast('Gagal memperbarui harga!', 'error');
             }
+        } else {
+            showToast('Harga tidak valid!', 'error');
         }
+    }
 
-        function shareAvailability() {
-            const data = getKendaraan();
-            let message = `🚗 *STATUS KETERSEDIAAN BAYANGTRANS*%0A━━━━━━━━━━━━━━━━━━━━%0A%0A`;
-            message += `🏍️ *MOTOR TERSEDIA:*%0A`;
-            data.motor.filter(m => m.tersedia).forEach(m => {
-                message += `• ${m.nama} - Rp ${m.harga.toLocaleString('id-ID')}/hari%0A`;
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toast');
+        document.getElementById('toast-message').textContent = message;
+        toast.style.background = type === 'error' 
+            ? 'linear-gradient(135deg, #ef4444, #dc2626)' 
+            : 'linear-gradient(135deg, #10b981, #059669)';
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(btn.dataset.tab).classList.add('active');
+        });
+    });
+
+    function doLogout() {
+        if (confirm('Yakin ingin logout?')) {
+            logoutAdmin().then(() => {
+                window.location.href = 'login.html';
             });
-            message += `%0A🚙 *MOBIL TERSEDIA:*%0A`;
-            data.mobil.filter(m => m.tersedia).forEach(m => {
-                message += `• ${m.nama} - Rp ${m.harga.toLocaleString('id-ID')}/hari%0A`;
-            });
-            message += `%0A📞 Booking: wa.me/6281263860005%0A📍 Jln. Jodipati No.15A, Yogyakarta`;
-            window.open(`https://wa.me/?text=${message}`, '_blank');
         }
+    }
 
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-message').textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        }
-
-        renderAll();
-    </script>
-
-</body>
-</html>
+    // Initialize
+    document.addEventListener('DOMContentLoaded', async () => {
+        await checkAuth();
+        await loadData();
+    });
+</script>

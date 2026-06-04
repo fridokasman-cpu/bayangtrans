@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
     <script src="js/admin-data.js"></script>
+    <script src="js/api.js"></script>
     <style>
         /* ===== ENHANCED HERO SECTION ===== */
         .hero {
@@ -926,71 +927,54 @@
 
     <script src="js/main.js"></script>
     <script>
-        // ===== LOAD KENDARAAN DARI LOCALSTORAGE =====
-        function loadPopularVehicles() {
-            const data = getKendaraan();
-            const container = document.getElementById('popular-vehicles');
-            
-            // Ambil 3 kendaraan populer (PCX, ADV, Inova Reborn)
-            const popular = [
-                data.motor.find(m => m.nama === "PCX 160"),
-                data.motor.find(m => m.nama === "ADV 160"),
-                data.mobil.find(m => m.nama === "Inova Reborn")
-            ].filter(Boolean);
-            
-            // Hitung unit tersedia
-            const allAvailable = [...data.motor, ...data.mobil].filter(k => k.tersedia).length;
-            document.getElementById('stat-unit').textContent = allAvailable;
-            
-            container.innerHTML = popular.map(item => {
-                const tipe = data.motor.find(m => m.id === item.id) ? 'Motor' : 'Mobil';
-                const isAvailable = item.tersedia;
-                
-                return `
-                    <div class="vehicle-card fade-in">
-                        <div class="vehicle-badge ${!isAvailable ? 'unavailable' : (tipe === 'Mobil' ? 'popular' : '')}">
-                            ${!isAvailable ? 'Tidak Tersedia' : tipe}
-                        </div>
-                        <div class="vehicle-img" style="background: url('${item.gambar}') center/cover; ${!isAvailable ? 'filter: grayscale(70%);' : ''}"></div>
-                        <div class="vehicle-info">
-                            <span class="vehicle-status ${isAvailable ? 'status-available' : 'status-unavailable'}">
-                                ${isAvailable ? '✓ Tersedia' : '✗ Sedang Disewa'}
-                            </span>
-                            <h3>${item.nama}</h3>
-                            <div class="vehicle-rating">
-                                ${'<i class="fas fa-star"></i>'.repeat(Math.floor(item.rating))}
-                                <span>(${item.rating})</span>
-                            </div>
-                            <div class="vehicle-price">
-                                <span class="price">Rp ${item.harga.toLocaleString('id-ID')}</span>
-                                <span class="period">/hari</span>
-                            </div>
-                            ${isAvailable 
-                                ? `<a href="booking.html?kendaraan=${encodeURIComponent(item.nama)}" class="btn-book">Book Sekarang</a>`
-                                : `<a href="https://wa.me/6281263860005?text=Halo,%20saya%20mau%20tanya%20ketersediaan%20${encodeURIComponent(item.nama)}" class="btn-book disabled" onclick="alert('Kendaraan ini sedang tidak tersedia. Silakan hubungi admin via WhatsApp.'); return false;">Hubungi Admin</a>`
-                            }
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            
-            // Re-apply fade animation
-            setTimeout(() => {
-                document.querySelectorAll('.fade-in').forEach(el => {
-                    const observer = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                entry.target.classList.add('visible');
-                            }
-                        });
-                    }, { threshold: 0.1 });
-                    observer.observe(el);
-                });
-            }, 100);
-        }
+    async function loadPopularVehicles() {
+        const allKendaraan = await getKendaraanFromDB();
+        const container = document.getElementById('popular-vehicles');
         
-        // Load saat halaman siap
-        document.addEventListener('DOMContentLoaded', loadPopularVehicles);
-    </script>
+        // Ambil 3 kendaraan populer
+        const popular = [
+            allKendaraan.find(k => k.nama === "PCX 160"),
+            allKendaraan.find(k => k.nama === "ADV 160"),
+            allKendaraan.find(k => k.nama === "Inova Reborn")
+        ].filter(Boolean);
+        
+        const available = allKendaraan.filter(k => k.tersedia).length;
+        document.getElementById('stat-unit').textContent = available;
+        
+        container.innerHTML = popular.map(item => {
+            const tipe = item.tipe;
+            const isAvailable = item.tersedia;
+            
+            return `
+                <div class="vehicle-card fade-in">
+                    <div class="vehicle-badge ${!isAvailable ? 'unavailable' : (tipe === 'Mobil' ? 'popular' : '')}">
+                        ${!isAvailable ? 'Tidak Tersedia' : tipe}
+                    </div>
+                    <div class="vehicle-img" style="background: url('${item.gambar}') center/cover; ${!isAvailable ? 'filter: grayscale(70%);' : ''}"></div>
+                    <div class="vehicle-info">
+                        <span class="vehicle-status ${isAvailable ? 'status-available' : 'status-unavailable'}">
+                            ${isAvailable ? '✓ Tersedia' : '✗ Sedang Disewa'}
+                        </span>
+                        <h3>${item.nama}</h3>
+                        <div class="vehicle-rating">
+                            ${'<i class="fas fa-star"></i>'.repeat(Math.floor(item.rating))}
+                            <span>(${item.rating})</span>
+                        </div>
+                        <div class="vehicle-price">
+                            <span class="price">Rp ${item.harga.toLocaleString('id-ID')}</span>
+                            <span class="period">/hari</span>
+                        </div>
+                        ${isAvailable 
+                            ? `<a href="booking.html?kendaraan=${encodeURIComponent(item.nama)}" class="btn-book">Book Sekarang</a>`
+                            : `<a href="https://wa.me/6281263860005?text=Halo,%20saya%20mau%20tanya%20ketersediaan%20${encodeURIComponent(item.nama)}" class="btn-book disabled">Hubungi Admin</a>`
+                        }
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+    
+    document.addEventListener('DOMContentLoaded', loadPopularVehicles);
+</script>
 </body>
 </html>

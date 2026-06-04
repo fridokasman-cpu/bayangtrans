@@ -1,15 +1,15 @@
 <?php
-// Konfigurasi Database
+// Konfigurasi Database XAMPP
 $host = 'localhost';
-$dbname = 'bayangtrans_db';
-$username = 'root';  // Default XAMPP
-$password = '';      // Default XAMPP kosong
+$username = 'root';
+$password = '';
+$database = 'bayangtrans_db';
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+    $pdo = new PDO("mysql:host=$host;dbname=$database;charset=utf8mb4", $username, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 } catch(PDOException $e) {
-    die("Koneksi database gagal: " . $e->getMessage());
+    die(json_encode(['error' => 'Koneksi database gagal: ' . $e->getMessage()]));
 }
 ?>
