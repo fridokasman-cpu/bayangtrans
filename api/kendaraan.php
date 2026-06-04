@@ -1,17 +1,21 @@
 <?php
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type');
+
 require_once '../config/database.php';
 
-$method = $_SERVER['REQUEST_METHOD'];
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
 
-// GET - Ambil semua kendaraan
-if ($method === 'GET') {
-    try {
+try {
+    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $stmt = $pdo->query("SELECT * FROM kendaraan ORDER BY tipe, nama");
         $kendaraan = $stmt->fetchAll();
         
-        // Format fitur dari string ke array
         foreach ($kendaraan as &$item) {
             $item['fitur'] = explode(',', $item['fitur']);
             $item['harga'] = (int)$item['harga'];
@@ -21,38 +25,9 @@ if ($method === 'GET') {
         }
         
         echo json_encode($kendaraan);
-    } catch(PDOException $e) {
-        http_response_code(500);
-        echo json_encode(['error' => $e->getMessage()]);
     }
-}
-
-// PUT - Update ketersediaan atau harga
-if ($method === 'PUT') {
-    session_start();
-    if (!isset($_SESSION['admin_logged_in'])) {
-        http_response_code(401);
-        echo json_encode(['error' => 'Unauthorized']);
-        exit;
-    }
-    
-    $input = json_decode(file_get_contents('php://input'), true);
-    
-    try {
-        if (isset($input['tersedia'])) {
-            // Update ketersediaan
-            $stmt = $pdo->prepare("UPDATE kendaraan SET tersedia = ? WHERE id = ?");
-            $stmt->execute([$input['tersedia'] ? 1 : 0, $input['id']]);
-            echo json_encode(['success' => true, 'message' => 'Ketersediaan diperbarui']);
-        } elseif (isset($input['harga'])) {
-            // Update harga
-            $stmt = $pdo->prepare("UPDATE kendaraan SET harga = ? WHERE id = ?");
-            $stmt->execute([$input['harga'], $input['id']]);
-            echo json_encode(['success' => true, 'message' => 'Harga diperbarui']);
-        }
-    } catch(PDOException $e) {
-        http_response_code(500);
-        echo json_encode(['error' => $e->getMessage()]);
-    }
+} catch(PDOException $e) {
+    http_response_code(500);
+    echo json_encode(['error' => $e->getMessage()]);
 }
 ?>

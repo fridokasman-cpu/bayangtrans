@@ -1,5 +1,4 @@
 <?php
-// Konfigurasi Database XAMPP
 $host = 'localhost';
 $username = 'root';
 $password = '';
@@ -10,6 +9,6 @@ try {
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 } catch(PDOException $e) {
-    die(json_encode(['error' => 'Koneksi database gagal: ' . $e->getMessage()]));
+    die(json_encode(['error' => 'Database connection failed: ' . $e->getMessage()]));
 }
 ?>

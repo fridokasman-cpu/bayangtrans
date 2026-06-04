@@ -6,7 +6,6 @@
     <title>Dashboard Admin - BayangTrans</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="../js/api.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
@@ -26,9 +25,13 @@
             z-index: 9999;
             flex-direction: column;
             gap: 20px;
+            transition: opacity 0.3s ease;
         }
         
-        .loading-overlay.hidden { display: none; }
+        .loading-overlay.hidden { 
+            opacity: 0;
+            pointer-events: none;
+        }
         
         .spinner {
             width: 60px;
@@ -52,6 +55,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
         .navbar-brand {
@@ -91,6 +96,13 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
         }
+        
+        .db-status.offline {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+        }
+        
+        .db-status.offline::before { background: #f59e0b; }
         
         .db-status.error {
             background: rgba(239, 68, 68, 0.2);
@@ -182,7 +194,6 @@
         
         .btn-refresh:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
         .btn-refresh:disabled { opacity: 0.6; cursor: not-allowed; }
-        .btn-refresh .fa-spin { animation: spin 1s linear infinite; }
         
         /* Stats Grid */
         .stats-grid {
@@ -326,6 +337,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         
         .content-card h2 {
@@ -453,6 +466,7 @@
         .toast.show { display: flex; }
         .toast.success { background: linear-gradient(135deg, #10b981, #059669); }
         .toast.error { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .toast.warning { background: linear-gradient(135deg, #f59e0b, #d97706); }
         
         @keyframes slideIn {
             from { transform: translateX(400px); opacity: 0; }
@@ -485,14 +499,14 @@
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="spinner"></div>
-        <p style="color: #6b7280; font-weight: 600;">Memuat data dari database...</p>
+        <p style="color: #6b7280; font-weight: 600;">Memuat dashboard...</p>
     </div>
 
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-brand">
             <i class="fas fa-tachometer-alt"></i> Dashboard Admin
-            <span class="db-status" id="dbStatus">MySQL Connected</span>
+            <span class="db-status" id="dbStatus">Online</span>
         </div>
         <div class="navbar-user">
             <div class="user-info">
@@ -538,14 +552,14 @@
                 <div class="stat-icon"><i class="fas fa-clipboard-list"></i></div>
                 <h3>Total Kendaraan</h3>
                 <div class="number" id="total-kendaraan">0</div>
-                <div class="trend"><i class="fas fa-database"></i> Data dari MySQL</div>
+                <div class="trend"><i class="fas fa-database"></i> <span id="data-source">Memuat...</span></div>
             </div>
             
             <div class="stat-card revenue">
                 <div class="stat-icon"><i class="fas fa-money-bill-wave"></i></div>
-                <h3>Total Booking</h3>
-                <div class="number" id="total-booking">0</div>
-                <div class="trend"><i class="fas fa-chart-line"></i> <span id="booking-pending">0</span> pending</div>
+                <h3>Potensi Pendapatan</h3>
+                <div class="number" id="potensi-pendapatan">Rp 0</div>
+                <div class="trend"><i class="fas fa-chart-line"></i> Per hari (semua unit)</div>
             </div>
         </div>
 
@@ -601,8 +615,8 @@
                 <h2><i class="fas fa-info-circle" style="color: #10b981;"></i> Informasi</h2>
                 
                 <div class="info-box">
-                    <h3><i class="fas fa-database"></i> Database MySQL</h3>
-                    <p>Data tersimpan di <strong>XAMPP MySQL</strong>. Perubahan akan tersinkron ke semua device secara real-time.</p>
+                    <h3><i class="fas fa-database"></i> Sumber Data</h3>
+                    <p id="info-sumber-data">Data diambil dari <strong>localStorage</strong>. Sinkronkan dengan database MySQL untuk fitur real-time.</p>
                 </div>
                 
                 <div class="info-box" style="background: linear-gradient(135deg, #fef3c7, #fde68a); border-left-color: #f59e0b;">
@@ -630,76 +644,155 @@
     </div>
 
     <script>
+        // ===== DATABASE DEFAULT (FALLBACK) =====
+        const defaultKendaraan = [
+            // Motor
+            { id: 1, nama: "Beat Old", tipe: "Motor", harga: 60000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+            { id: 2, nama: "Beat New", tipe: "Motor", harga: 70000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+            { id: 3, nama: "Beat Street", tipe: "Motor", harga: 75000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+            { id: 4, nama: "All New Scoopy", tipe: "Motor", harga: 85000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+            { id: 5, nama: "New Vario", tipe: "Motor", harga: 100000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+            { id: 6, nama: "All-new Vario", tipe: "Motor", harga: 110000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+            { id: 7, nama: "Stylo", tipe: "Motor", harga: 120000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+            { id: 8, nama: "Nmax", tipe: "Motor", harga: 130000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+            // Mobil
+            { id: 11, nama: "Avanza Grand", tipe: "Mobil", harga: 300000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+            { id: 12, nama: "Mobilio", tipe: "Mobil", harga: 300000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+            { id: 13, nama: "Ayla", tipe: "Mobil", harga: 275000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+            { id: 14, nama: "Sigra", tipe: "Mobil", harga: 275000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+            { id: 15, nama: "New Xenia", tipe: "Mobil", harga: 350000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+            { id: 16, nama: "Inova Grand", tipe: "Mobil", harga: 400000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+            { id: 17, nama: "Inova Reborn", tipe: "Mobil", harga: 550000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+            { id: 18, nama: "Brio", tipe: "Mobil", harga: 300000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] }
+        ];
+
+        // ===== STATE =====
         let allKendaraan = [];
-        let allBookings = [];
+        let dataSource = 'localStorage';
         let refreshInterval;
+        const API_BASE = '../api';
 
         // ===== INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', async () => {
-            await initDashboard();
-        });
-
-        async function initDashboard() {
-            try {
-                // Cek login status
-                const loginStatus = await checkLoginStatus();
-                if (!loginStatus.logged_in) {
-                    window.location.href = 'login.html';
-                    return;
-                }
-
-                // Set admin info
-                const adminName = loginStatus.admin?.nama || sessionStorage.getItem('admin_name') || 'Administrator';
-                document.getElementById('admin-name').textContent = adminName;
-                document.getElementById('welcome-name').textContent = adminName;
-
-                // Load data
-                await loadDashboard();
-
-                // Hide loading
-                document.getElementById('loadingOverlay').classList.add('hidden');
-
-                // Set DB status to connected
-                document.getElementById('dbStatus').classList.remove('error');
-                document.getElementById('dbStatus').textContent = 'MySQL Connected';
-
-                // Auto refresh setiap 60 detik
-                refreshInterval = setInterval(loadDashboard, 60000);
-
-            } catch (error) {
-                console.error('Init error:', error);
-                document.getElementById('loadingOverlay').classList.add('hidden');
-                document.getElementById('dbStatus').classList.add('error');
-                document.getElementById('dbStatus').textContent = 'DB Error';
-                showToast('Gagal terhubung ke database!', 'error');
+            // Cek login - gunakan localStorage untuk kompatibilitas
+            const isLoggedIn = sessionStorage.getItem('admin_logged_in') === 'true' || 
+                              localStorage.getItem('admin_logged_in') === 'true';
+            
+            if (!isLoggedIn) {
+                // Jika belum login, redirect ke login
+                window.location.href = 'login.html';
+                return;
             }
-        }
+
+            // Set admin info
+            const adminName = sessionStorage.getItem('admin_name') || 
+                             localStorage.getItem('admin_name') || 
+                             'Administrator';
+            document.getElementById('admin-name').textContent = adminName;
+            document.getElementById('welcome-name').textContent = adminName;
+
+            // Load data dengan timeout
+            await loadDashboard();
+
+            // Hide loading (dengan delay minimum agar smooth)
+            setTimeout(() => {
+                document.getElementById('loadingOverlay').classList.add('hidden');
+            }, 500);
+
+            // Auto refresh setiap 60 detik
+            refreshInterval = setInterval(loadDashboard, 60000);
+        });
 
         // ===== LOAD DATA =====
         async function loadDashboard() {
             try {
-                // Load kendaraan
-                allKendaraan = await getKendaraanFromDB();
+                // Coba load dari API dulu (dengan timeout 3 detik)
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 3000);
                 
-                // Load bookings (jika ada API)
                 try {
-                    allBookings = await fetch(`${API_BASE}/booking.php`).then(r => r.json());
-                } catch (e) {
-                    allBookings = [];
+                    const response = await fetch(`${API_BASE}/kendaraan.php`, {
+                        signal: controller.signal
+                    });
+                    clearTimeout(timeoutId);
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (Array.isArray(data) && data.length > 0) {
+                            allKendaraan = data;
+                            dataSource = 'MySQL Database';
+                            setDbStatus('online');
+                            document.getElementById('info-sumber-data').innerHTML = 
+                                'Data diambil dari <strong>MySQL Database</strong> (XAMPP). Real-time sync aktif.';
+                        } else {
+                            throw new Error('Data kosong');
+                        }
+                    } else {
+                        throw new Error('API error');
+                    }
+                } catch (apiError) {
+                    console.log('API tidak tersedia, menggunakan localStorage:', apiError.message);
+                    
+                    // Fallback ke localStorage
+                    const localData = localStorage.getItem('bayangtrans_kendaraan');
+                    if (localData) {
+                        const parsed = JSON.parse(localData);
+                        // Format data dari localStorage (objek motor & mobil)
+                        if (parsed.motor && parsed.mobil) {
+                            allKendaraan = [...parsed.motor, ...parsed.mobil];
+                        } else if (Array.isArray(parsed)) {
+                            allKendaraan = parsed;
+                        } else {
+                            allKendaraan = defaultKendaraan;
+                        }
+                        dataSource = 'localStorage';
+                        setDbStatus('offline');
+                        document.getElementById('info-sumber-data').innerHTML = 
+                            'Data diambil dari <strong>localStorage</strong> browser. Sinkronkan dengan database MySQL untuk fitur real-time.';
+                    } else {
+                        // Fallback terakhir: data default
+                        allKendaraan = defaultKendaraan;
+                        dataSource = 'Default (bawaan)';
+                        setDbStatus('offline');
+                        document.getElementById('info-sumber-data').innerHTML = 
+                            'Menggunakan <strong>data bawaan</strong>. Silakan atur kendaraan di menu Pengaturan.';
+                    }
                 }
 
                 updateStats();
                 filterVehicles();
                 
-                // Update DB status
-                document.getElementById('dbStatus').classList.remove('error');
-                document.getElementById('dbStatus').textContent = 'MySQL Connected';
-                
             } catch (error) {
                 console.error('Load error:', error);
-                document.getElementById('dbStatus').classList.add('error');
-                document.getElementById('dbStatus').textContent = 'DB Error';
-                showToast('Gagal memuat data dari database!', 'error');
+                // Fallback ke data default
+                allKendaraan = defaultKendaraan;
+                dataSource = 'Default (bawaan)';
+                setDbStatus('error');
+                updateStats();
+                filterVehicles();
+                showToast('Menggunakan data default', 'warning');
+            }
+        }
+
+        // ===== SET DB STATUS =====
+        function setDbStatus(status) {
+            const dbStatus = document.getElementById('dbStatus');
+            const dataSourceEl = document.getElementById('data-source');
+            
+            dbStatus.classList.remove('online', 'offline', 'error');
+            
+            if (status === 'online') {
+                dbStatus.classList.add('online');
+                dbStatus.textContent = 'MySQL Connected';
+                if (dataSourceEl) dataSourceEl.textContent = 'Data dari MySQL';
+            } else if (status === 'offline') {
+                dbStatus.classList.add('offline');
+                dbStatus.textContent = 'Offline Mode';
+                if (dataSourceEl) dataSourceEl.textContent = 'Data dari localStorage';
+            } else {
+                dbStatus.classList.add('error');
+                dbStatus.textContent = 'Error';
+                if (dataSourceEl) dataSourceEl.textContent = 'Data default';
             }
         }
 
@@ -714,10 +807,10 @@
             document.getElementById('motor-tersedia').textContent = motor.filter(m => m.tersedia).length;
             document.getElementById('mobil-tersedia').textContent = mobil.filter(m => m.tersedia).length;
             
-            // Booking stats
-            document.getElementById('total-booking').textContent = allBookings.length;
-            document.getElementById('booking-pending').textContent = 
-                allBookings.filter(b => b.status === 'Pending').length;
+            // Hitung potensi pendapatan per hari
+            const totalPerHari = allKendaraan.reduce((sum, k) => sum + k.harga, 0);
+            document.getElementById('potensi-pendapatan').textContent = 
+                'Rp ' + totalPerHari.toLocaleString('id-ID');
         }
 
         // ===== FILTER & RENDER VEHICLES =====
@@ -781,10 +874,14 @@
         }
 
         // ===== LOGOUT =====
-        async function doLogout() {
+        function doLogout() {
             if (confirm('Yakin ingin logout?')) {
                 if (refreshInterval) clearInterval(refreshInterval);
-                await logoutAdmin();
+                sessionStorage.removeItem('admin_logged_in');
+                sessionStorage.removeItem('admin_username');
+                sessionStorage.removeItem('admin_name');
+                localStorage.removeItem('admin_logged_in');
+                localStorage.removeItem('admin_name');
                 window.location.href = 'login.html';
             }
         }
@@ -796,7 +893,9 @@
             document.getElementById('toast-message').textContent = message;
             
             toast.className = `toast ${type}`;
-            icon.className = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+            icon.className = type === 'success' ? 'fas fa-check-circle' : 
+                            type === 'error' ? 'fas fa-exclamation-circle' : 
+                            'fas fa-exclamation-triangle';
             
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 3000);
