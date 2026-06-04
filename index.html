@@ -3,214 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BayangTrans - Sewa Motor & Mobil Jogja</title>
-    <meta name="description" content="Sewa motor dan mobil harian, mingguan, bulanan di Yogyakarta. Harga terjangkau, unit terawat, antar jemput.">
-    <!-- Font Google -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <!-- Icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --primary: #2563eb; /* Biru Profesional */
-            --secondary: #1e40af;
-            --accent: #f59e0b; /* Kuning/Oranye untuk tombol */
-            --text: #1f2937;
-            --bg: #f3f4f6;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
-        
-        /* Header */
-        header { background: white; padding: 1rem 5%; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 700; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 10px; }
-        .logo span { color: var(--accent); }
-        .logo-img { height: 40px; width: auto; }
-
-        /* Hero Section */
-        .hero { text-align: center; padding: 4rem 1rem; background: linear-gradient(rgba(37, 99, 235, 0.9), rgba(30, 64, 175, 0.9)), url('https://images.unsplash.com/photo-1596707328606-2580556f08a3?auto=format&fit=crop&w=800&q=80'); background-size: cover; background-position: center; color: white; }
-        .hero h1 { font-size: 2rem; margin-bottom: 1rem; }
-        .hero p { font-size: 1rem; margin-bottom: 2rem; opacity: 0.9; }
-        .btn-wa { display: inline-block; background: #25D366; color: white; padding: 12px 24px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); transition: transform 0.2s; }
-        .btn-wa:hover { transform: scale(1.05); }
-        .btn-wa i { margin-right: 8px; }
-
-        /* Unit Section */
-        .container { max-width: 1000px; margin: 0 auto; padding: 3rem 1rem; }
-        .section-title { text-align: center; margin-bottom: 2rem; font-size: 1.5rem; color: var(--primary); }
-        
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-        .card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: transform 0.2s; }
-        .card:hover { transform: translateY(-5px); }
-        .card-img { height: 180px; background-color: #ddd; display: flex; align-items: center; justify-content: center; color: #666; font-size: 3rem; }
-        /* Ganti background-color di atas dengan background-image jika sudah ada foto */
-        .card-body { padding: 1.5rem; }
-        .card-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .card-price { color: var(--primary); font-weight: 700; font-size: 1.1rem; margin-bottom: 1rem; }
-        .card-features { list-style: none; font-size: 0.9rem; color: #666; margin-bottom: 1.5rem; }
-        .card-features li { margin-bottom: 0.3rem; }
-        .card-features i { color: var(--accent); margin-right: 8px; width: 20px; }
-        .btn-book { display: block; width: 100%; text-align: center; background: var(--primary); color: white; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 600; }
-        .btn-book:hover { background: var(--secondary); }
-
-        /* Info Section */
-        .info-section { background: white; padding: 2rem 1rem; text-align: center; }
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: 0 auto; }
-        .info-item { padding: 1rem; }
-        .info-item i { font-size: 1.5rem; color: var(--primary); margin-bottom: 0.5rem; }
-        .info-item h3 { font-size: 1rem; margin-bottom: 0.3rem; color: var(--text); }
-        .info-item p, .info-item a { color: #666; text-decoration: none; font-size: 0.95rem; }
-        .info-item a:hover { color: var(--primary); }
-
-        /* Keunggulan */
-        .features { background: var(--bg); padding: 3rem 1rem; text-align: center; }
-        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; max-width: 1000px; margin: 0 auto; }
-        .feature-item i { font-size: 2rem; color: var(--primary); margin-bottom: 1rem; }
-        .feature-item h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
-
-        /* Footer */
-        footer { background: var(--text); color: white; text-align: center; padding: 2rem 1rem; font-size: 0.9rem; }
-        footer a { color: var(--accent); text-decoration: none; }
-        footer .social-links { margin: 1rem 0; }
-        footer .social-links a { display: inline-block; margin: 0 10px; font-size: 1.5rem; transition: transform 0.2s; }
-        footer .social-links a:hover { transform: scale(1.2); }
-
-        /* Floating WA Button */
-        .floating-wa { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.3); text-decoration: none; z-index: 999; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
-
-        @media (max-width: 600px) {
-            .hero h1 { font-size: 1.5rem; }
-        }
-    </style>
+    <title>BayangTrans - Sewa Motor & Mobil Jogja Terpercaya</title>
+    <meta name="description" content="Sewa motor dan mobil harian di Yogyakarta. Harga terjangkau, unit terawat, antar jemput.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
 
-    <header>
-        <a href="#" class="logo">
-            <!-- Ganti src dengan path logo kamu jika sudah ada -->
-            <!-- <img src="logo.png" alt="BayangTrans" class="logo-img"> -->
-            Bayang<span>Trans</span>
-        </a>
-    </header>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.png" alt="BayangTrans" class="logo-img" onerror="this.style.display='none'">
+                <span class="logo-text">Bayang<span>Trans</span></span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" class="active">Beranda</a></li>
+                <li><a href="kendaraan.html">Kendaraan</a></li>
+                <li><a href="booking.html">Booking</a></li>
+                <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
+            <a href="https://wa.me/6281263860005" class="nav-cta" target="_blank">
+                <i class="fab fa-whatsapp"></i> Hubungi Kami
+            </a>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
 
+    <!-- HERO SECTION -->
     <section class="hero">
-        <h1>Sewa Motor & Mobil Terpercaya di Jogja</h1>
-        <p>Harga bersahabat, unit terawat, siap antar ke bandara/stasiun/hotel.</p>
-        <a href="https://wa.me/6281263860005?text=Halo%20BayangTrans,%20saya%20ingin%20tanya%20sewa%20kendaraan." class="btn-wa" target="_blank">
-            <i class="fab fa-whatsapp"></i> Chat WhatsApp Sekarang
-        </a>
-    </section>
-
-    <!-- Info Kontak -->
-    <section class="info-section">
-        <div class="info-grid">
-            <div class="info-item">
-                <i class="fab fa-whatsapp"></i>
-                <h3>WhatsApp</h3>
-                <a href="https://wa.me/6281263860005" target="_blank">+62 812-6386-0005</a>
+        <div class="hero-overlay"></div>
+        <div class="container hero-content fade-in">
+            <span class="hero-badge">🏍️ Sewa Kendaraan #1 di Jogja</span>
+            <h1>Jelajahi Yogyakarta dengan <span class="highlight">BayangTrans</span></h1>
+            <p>Sewa motor dan mobil harian, mingguan, atau bulanan. Unit terawat, harga bersahabat, siap antar ke lokasi Anda.</p>
+            <div class="hero-buttons">
+                <a href="kendaraan.html" class="btn btn-primary">
+                    <i class="fas fa-motorcycle"></i> Lihat Kendaraan
+                </a>
+                <a href="https://wa.me/6281263860005?text=Halo%20BayangTrans,%20saya%20ingin%20booking" class="btn btn-whatsapp" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Booking via WA
+                </a>
             </div>
-            <div class="info-item">
-                <i class="fab fa-instagram"></i>
-                <h3>Instagram</h3>
-                <a href="https://instagram.com/bayangtrans" target="_blank">@bayangtrans</a>
-            </div>
-            <div class="info-item">
-                <i class="fas fa-map-marker-alt"></i>
-                <h3>Alamat</h3>
-                <p>Jln. Jodipati No.15A<br>Yogyakarta</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="container">
-        <h2 class="section-title">Pilihan Unit Kami</h2>
-        <div class="grid">
-            <!-- Motor 1 -->
-            <div class="card">
-                <div class="card-img" style="background: url('https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=400&q=80') center/cover;"></div>
-                <div class="card-body">
-                    <h3 class="card-title">Yamaha NMAX</h3>
-                    <div class="card-price">Rp 80.000 / hari</div>
-                    <ul class="card-features">
-                        <li><i class="fas fa-check"></i> 2 Helm SNI</li>
-                        <li><i class="fas fa-check"></i> Jas Hujan</li>
-                        <li><i class="fas fa-check"></i> Free Antar Jemput*</li>
-                    </ul>
-                    <a href="https://wa.me/6281263860005?text=Halo%20BayangTrans,%20saya%20mau%20sewa%20NMAX" class="btn-book" target="_blank">Pesan NMAX</a>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <h3>500+</h3>
+                    <p>Pelanggan Puas</p>
                 </div>
-            </div>
-
-            <!-- Motor 2 -->
-            <div class="card">
-                <div class="card-img" style="background: url('https://images.unsplash.com/photo-1629814484931-37300b2b0816?auto=format&fit=crop&w=400&q=80') center/cover;"></div>
-                <div class="card-body">
-                    <h3 class="card-title">Honda Vario 160</h3>
-                    <div class="card-price">Rp 70.000 / hari</div>
-                    <ul class="card-features">
-                        <li><i class="fas fa-check"></i> 2 Helm SNI</li>
-                        <li><i class="fas fa-check"></i> Jas Hujan</li>
-                        <li><i class="fas fa-check"></i> BBM Full</li>
-                    </ul>
-                    <a href="https://wa.me/6281263860005?text=Halo%20BayangTrans,%20saya%20mau%20sewa%20Vario" class="btn-book" target="_blank">Pesan Vario</a>
+                <div class="stat-item">
+                    <h3>50+</h3>
+                    <p>Unit Tersedia</p>
                 </div>
-            </div>
-
-            <!-- Mobil 1 -->
-            <div class="card">
-                <div class="card-img" style="background: url('https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=400&q=80') center/cover;"></div>
-                <div class="card-body">
-                    <h3 class="card-title">Toyota Avanza</h3>
-                    <div class="card-price">Rp 350.000 / hari</div>
-                    <ul class="card-features">
-                        <li><i class="fas fa-check"></i> Lepas Kunci / Dengan Supir</li>
-                        <li><i class="fas fa-check"></i> 7 Penumpang</li>
-                        <li><i class="fas fa-check"></i> AC Dingin</li>
-                    </ul>
-                    <a href="https://wa.me/6281263860005?text=Halo%20BayangTrans,%20saya%20mau%20sewa%20Avanza" class="btn-book" target="_blank">Pesan Avanza</a>
+                <div class="stat-item">
+                    <h3>24/7</h3>
+                    <p>Layanan Support</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="features">
-        <h2 class="section-title">Kenapa Memilih BayangTrans?</h2>
-        <div class="feature-grid">
-            <div class="feature-item">
-                <i class="fas fa-shield-alt"></i>
-                <h3>Unit Terawat</h3>
-                <p>Servis rutin di bengkel resmi untuk kenyamanan Anda.</p>
+    <!-- KEUNGGULAN -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Mengapa Memilih Kami</span>
+                <h2 class="section-title">Keunggulan BayangTrans</h2>
             </div>
-            <div class="feature-item">
-                <i class="fas fa-tags"></i>
-                <h3>Harga Transparan</h3>
-                <p>Tidak ada biaya tersembunyi. Harga sudah termasuk asuransi dasar.</p>
-            </div>
-            <div class="feature-item">
-                <i class="fas fa-clock"></i>
-                <h3>Layanan 24 Jam</h3>
-                <p>Admin siap membantu pemesanan dan darurat kapan saja.</p>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Unit Terawat</h3>
+                    <p>Semua kendaraan diservis rutin di bengkel resmi untuk keamanan dan kenyamanan Anda.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <h3>Harga Transparan</h3>
+                    <p>Tidak ada biaya tersembunyi. Harga yang tertera sudah termasuk asuransi dasar.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3>Antar Jemput</h3>
+                    <p>Free antar jemput ke bandara, stasiun, hotel, atau alamat Anda di area Yogyakarta.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Support 24 Jam</h3>
+                    <p>Tim kami siap membantu Anda kapan saja, termasuk bantuan darurat di jalan.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <footer>
-        <div class="social-links">
-            <a href="https://instagram.com/bayangtrans" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://wa.me/6281263860005" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <!-- KENDARAAN POPULER -->
+    <section class="popular-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">Paling Diminati</span>
+                <h2 class="section-title">Kendaraan Populer</h2>
+            </div>
+            <div class="popular-grid">
+                <div class="vehicle-card fade-in">
+                    <div class="vehicle-badge">Motor</div>
+                    <div class="vehicle-img" style="background: url('https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=600&q=80') center/cover;"></div>
+                    <div class="vehicle-info">
+                        <h3>Yamaha NMAX</h3>
+                        <div class="vehicle-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(4.9)</span>
+                        </div>
+                        <div class="vehicle-price">
+                            <span class="price">Rp 80.000</span>
+                            <span class="period">/hari</span>
+                        </div>
+                        <a href="booking.html?kendaraan=NMAX" class="btn-book">Book Sekarang</a>
+                    </div>
+                </div>
+
+                <div class="vehicle-card fade-in">
+                    <div class="vehicle-badge">Motor</div>
+                    <div class="vehicle-img" style="background: url('https://images.unsplash.com/photo-1629814484931-37300b2b0816?auto=format&fit=crop&w=600&q=80') center/cover;"></div>
+                    <div class="vehicle-info">
+                        <h3>Honda Vario 160</h3>
+                        <div class="vehicle-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span>(4.7)</span>
+                        </div>
+                        <div class="vehicle-price">
+                            <span class="price">Rp 70.000</span>
+                            <span class="period">/hari</span>
+                        </div>
+                        <a href="booking.html?kendaraan=Vario" class="btn-book">Book Sekarang</a>
+                    </div>
+                </div>
+
+                <div class="vehicle-card fade-in">
+                    <div class="vehicle-badge popular">Mobil</div>
+                    <div class="vehicle-img" style="background: url('https://images.unsplash.com/photo-1590362891991-f776e747a588?auto=format&fit=crop&w=600&q=80') center/cover;"></div>
+                    <div class="vehicle-info">
+                        <h3>Toyota Avanza</h3>
+                        <div class="vehicle-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span>(4.8)</span>
+                        </div>
+                        <div class="vehicle-price">
+                            <span class="price">Rp 350.000</span>
+                            <span class="period">/hari</span>
+                        </div>
+                        <a href="booking.html?kendaraan=Avanza" class="btn-book">Book Sekarang</a>
+                    </div>
+                </div>
+            </div>
+            <div class="view-all">
+                <a href="kendaraan.html" class="btn btn-outline">Lihat Semua Kendaraan <i class="fas fa-arrow-right"></i></a>
+            </div>
         </div>
-        <p><strong>BayangTrans</strong> - Sewa Motor & Mobil Jogja</p>
-        <p><i class="fas fa-map-marker-alt"></i> Jln. Jodipati No.15A, Yogyakarta</p>
-        <p><i class="fab fa-whatsapp"></i> +62 812-6386-0005</p>
-        <p><i class="fab fa-instagram"></i> @bayangtrans</p>
-        <br>
-        <p>&copy; 2024 BayangTrans. All rights reserved.</p>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content fade-in">
+                <h2>Siap Menjelajahi Yogyakarta?</h2>
+                <p>Booking sekarang dan dapatkan harga spesial untuk penyewaan mingguan!</p>
+                <a href="https://wa.me/6281263860005?text=Halo%20BayangTrans,%20saya%20mau%20tanya%20promo%20mingguan" class="btn btn-whatsapp-large" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Chat WhatsApp Sekarang
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <span class="logo-text">Bayang<span>Trans</span></span>
+                    </div>
+                    <p>Sewa motor dan mobil terpercaya di Yogyakarta. Melayani dengan sepenuh hati sejak 2020.</p>
+                    <div class="social-links">
+                        <a href="https://instagram.com/bayangtrans" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/6281263860005" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Menu</h4>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="kendaraan.html">Kendaraan</a></li>
+                        <li><a href="booking.html">Booking</a></li>
+                        <li><a href="tentang.html">Tentang Kami</a></li>
+                        <li><a href="kontak.html">Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Kontak</h4>
+                    <ul class="contact-list">
+                        <li><i class="fas fa-map-marker-alt"></i> Jln. Jodipati No.15A, Yogyakarta</li>
+                        <li><i class="fab fa-whatsapp"></i> +62 812-6386-0005</li>
+                        <li><i class="fab fa-instagram"></i> @bayangtrans</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Jam Operasional</h4>
+                    <ul class="contact-list">
+                        <li><i class="fas fa-clock"></i> Senin - Minggu</li>
+                        <li><i class="fas fa-clock"></i> 08.00 - 21.00 WIB</li>
+                        <li><i class="fas fa-phone"></i> WA 24 Jam</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BayangTrans. All rights reserved. Made with <i class="fas fa-heart" style="color: #ef4444;"></i> in Yogyakarta</p>
+            </div>
+        </div>
     </footer>
 
-    <!-- Tombol WA Melayang -->
+    <!-- FLOATING WA -->
     <a href="https://wa.me/6281263860005?text=Halo%20BayangTrans" class="floating-wa" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <script src="js/main.js"></script>
 </body>
 </html>
