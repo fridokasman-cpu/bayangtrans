@@ -1,0 +1,219 @@
+<script>
+    const API_BASE = '../api';
+    let allBookings = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        // Cek login
+        const isLoggedIn = sessionStorage.getItem('admin_logged_in') === 'true';
+        if (!isLoggedIn) {
+            window.location.href = 'login.html';
+            return;
+        }
+
+        // Set admin info
+        const adminName = sessionStorage.getItem('admin_name') || 'Administrator';
+        document.getElementById('admin-name').textContent = adminName;
+
+        // Load bookings dari database
+        await loadBookings();
+
+        // Search & Filter
+        document.getElementById('searchInput').addEventListener('input', filterBookings);
+        document.getElementById('statusFilter').addEventListener('change', filterBookings);
+
+        // Auto refresh setiap 30 detik
+        setInterval(loadBookings, 30000);
+    });
+
+    async function loadBookings() {
+        try {
+            const response = await fetch(`${API_BASE}/booking.php`, {
+                cache: 'no-store'
+            });
+            
+            if (!response.ok) throw new Error('API error');
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                allBookings = result.data;
+                renderBookings(allBookings);
+                updateStats();
+            } else {
+                throw new Error(result.error);
+            }
+            
+        } catch (error) {
+            console.error('Load error:', error);
+            allBookings = [];
+            renderBookings([]);
+            document.getElementById('bookingList').innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-exclamation-triangle" style="color: #ef4444;"></i>
+                    <p>Gagal memuat data booking</p>
+                    <p style="font-size: 0.85rem;">Pastikan file api/booking.php ada</p>
+                </div>
+            `;
+        }
+    }
+
+    function renderBookings(bookings) {
+        const container = document.getElementById('bookingList');
+        
+        if (bookings.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <p>Belum ada booking</p>
+                    <p style="font-size: 0.85rem;">Booking dari pelanggan akan muncul di sini</p>
+                </div>
+            `;
+            return;
+        }
+
+        container.innerHTML = bookings.map(booking => `
+            <div class="booking-card">
+                <div class="booking-header">
+                    <div>
+                        <div class="booking-id">#BOOKING-${String(booking.id).padStart(4, '0')} • ${formatDateTime(booking.created_at)}</div>
+                        <h3 style="font-size: 1.2rem; margin-top: 5px;">${booking.nama}</h3>
+                    </div>
+                    <span class="booking-status status-${booking.status.toLowerCase().replace(' ', '-')}">
+                        ${booking.status}
+                    </span>
+                </div>
+                
+                <div class="booking-body">
+                    <div class="booking-info">
+                        <h4>Kendaraan</h4>
+                        <p>${booking.kendaraan_nama} (${booking.jumlah} unit)</p>
+                    </div>
+                    <div class="booking-info">
+                        <h4>Periode Sewa</h4>
+                        <p>${formatDate(booking.tgl_mulai)} ${booking.jam_mulai}</p>
+                        <p style="font-size: 0.85rem;">s/d ${formatDate(booking.tgl_selesai)} ${booking.jam_selesai}</p>
+                    </div>
+                    <div class="booking-info">
+                        <h4>Lokasi</h4>
+                        <p>Ambil: ${booking.lokasi_mulai}</p>
+                        <p style="font-size: 0.85rem;">Kembali: ${booking.lokasi_selesai}</p>
+                    </div>
+                    <div class="booking-info">
+                        <h4>Kontak</h4>
+                        <p>📱 ${booking.nohp1}</p>
+                        <p style="font-size: 0.85rem;">💬 ${booking.instagram || '-'}</p>
+                    </div>
+                    <div class="booking-info">
+                        <h4>Pekerjaan</h4>
+                        <p>${booking.pekerjaan}</p>
+                    </div>
+                    <div class="booking-info">
+                        <h4>Jaminan</h4>
+                        <p>${booking.identitas1}, ${booking.identitas2}, ${booking.identitas3}</p>
+                    </div>
+                </div>
+                
+                <div class="booking-actions">
+                    <a href="https://wa.me/62${booking.nohp1.replace(/^0/, '')}" target="_blank" class="btn-action btn-wa">
+                        <i class="fab fa-whatsapp"></i> Chat WhatsApp
+                    </a>
+                    <button class="btn-action" style="background:#f59e0b;color:white;" onclick="updateStatus(${booking.id}, 'DP Diterima')">
+                        <i class="fas fa-money-bill"></i> DP Diterima
+                    </button>
+                    <button class="btn-action" style="background:#10b981;color:white;" onclick="updateStatus(${booking.id}, 'Aktif')">
+                        <i class="fas fa-check"></i> Aktifkan
+                    </button>
+                    <button class="btn-action" style="background:#6b7280;color:white;" onclick="updateStatus(${booking.id}, 'Selesai')">
+                        <i class="fas fa-flag-checkered"></i> Selesai
+                    </button>
+                    <button class="btn-action" style="background:#ef4444;color:white;" onclick="updateStatus(${booking.id}, 'Batal')">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    async function updateStatus(id, status) {
+        if (!confirm(`Ubah status booking #${id} menjadi "${status}"?`)) return;
+        
+        try {
+            const response = await fetch(`${API_BASE}/booking.php`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id, status })
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                showToast(`Status berhasil diubah ke "${status}"`);
+                await loadBookings();
+            } else {
+                throw new Error(result.error);
+            }
+        } catch (error) {
+            alert('Gagal update status: ' + error.message);
+        }
+    }
+
+    function filterBookings() {
+        const search = document.getElementById('searchInput').value.toLowerCase();
+        const status = document.getElementById('statusFilter').value;
+
+        let filtered = allBookings;
+
+        if (status !== 'all') {
+            filtered = filtered.filter(b => b.status === status);
+        }
+
+        if (search) {
+            filtered = filtered.filter(b => 
+                b.nama.toLowerCase().includes(search) ||
+                b.nohp1.includes(search) ||
+                b.kendaraan_nama.toLowerCase().includes(search)
+            );
+        }
+
+        renderBookings(filtered);
+    }
+
+    function updateStats() {
+        document.getElementById('total-booking').textContent = allBookings.length;
+        document.getElementById('pending-booking').textContent = allBookings.filter(b => b.status === 'Pending').length;
+        document.getElementById('dp-booking').textContent = allBookings.filter(b => b.status === 'DP Diterima').length;
+        document.getElementById('aktif-booking').textContent = allBookings.filter(b => b.status === 'Aktif').length;
+    }
+
+    function formatDate(dateStr) {
+        const options = { day: 'numeric', month: 'short', year: 'numeric' };
+        return new Date(dateStr).toLocaleDateString('id-ID', options);
+    }
+
+    function formatDateTime(dateStr) {
+        const date = new Date(dateStr);
+        return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) + 
+               ' ' + date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.style.cssText = `
+            position: fixed; bottom: 30px; right: 30px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white; padding: 15px 25px; border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+            z-index: 9999; font-weight: 600;
+        `;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+
+    function doLogout() {
+        if (confirm('Yakin ingin logout?')) {
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        }
+    }
+</script>

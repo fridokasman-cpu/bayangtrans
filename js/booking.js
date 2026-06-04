@@ -29,114 +29,149 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Handle Submit Form
     if (form) {
-        form.addEventListener('submit', (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             // Ambil semua data
-            const nama = document.getElementById('nama').value.trim();
-            const instagram = document.getElementById('instagram').value.trim();
-            const facebook = document.getElementById('facebook').value.trim() || '-';
-            const nohp1 = document.getElementById('nohp1').value.trim();
-            const nowa2 = document.getElementById('nowa2').value.trim();
-            const norek = document.getElementById('norek').value.trim() || '-';
-            const pekerjaan = document.getElementById('pekerjaan').value.trim();
-            const fotoKTP = document.getElementById('fotoktp').files[0];
-            
-            const tglMulaiVal = document.getElementById('tgl-mulai').value;
-            const jamMulai = document.getElementById('jam-mulai').value;
-            const lokasiMulai = document.getElementById('lokasi-mulai').value.trim();
-            const tglSelesaiVal = document.getElementById('tgl-selesai').value;
-            const jamSelesai = document.getElementById('jam-selesai').value;
-            const lokasiSelesai = document.getElementById('lokasi-selesai').value.trim();
-            
-            const jenisKendaraan = document.getElementById('jenis-kendaraan').value;
-            const jumlahKendaraan = document.getElementById('jumlah-kendaraan').value;
-            
-            const identitas1 = document.getElementById('identitas1').value;
-            const identitas2 = document.getElementById('identitas2').value;
-            const identitas3 = document.getElementById('identitas3').value;
-            
-            const agree = document.getElementById('agree').checked;
+            const data = {
+                nama: document.getElementById('nama').value.trim(),
+                instagram: document.getElementById('instagram').value.trim(),
+                facebook: document.getElementById('facebook').value.trim(),
+                nohp1: document.getElementById('nohp1').value.trim(),
+                nowa2: document.getElementById('nowa2').value.trim(),
+                norek: document.getElementById('norek').value.trim(),
+                pekerjaan: document.getElementById('pekerjaan').value.trim(),
+                tgl_mulai: document.getElementById('tgl-mulai').value,
+                jam_mulai: document.getElementById('jam-mulai').value,
+                lokasi_mulai: document.getElementById('lokasi-mulai').value.trim(),
+                tgl_selesai: document.getElementById('tgl-selesai').value,
+                jam_selesai: document.getElementById('jam-selesai').value,
+                lokasi_selesai: document.getElementById('lokasi-selesai').value.trim(),
+                kendaraan_nama: document.getElementById('jenis-kendaraan').value,
+                jumlah: document.getElementById('jumlah-kendaraan').value,
+                identitas1: document.getElementById('identitas1').value,
+                identitas2: document.getElementById('identitas2').value,
+                identitas3: document.getElementById('identitas3').value,
+                catatan: ''
+            };
 
             // Validasi
-            if (!nama || !instagram || !nohp1 || !nowa2 || !pekerjaan) {
+            if (!data.nama || !data.instagram || !data.nohp1 || !data.nowa2 || !data.pekerjaan) {
                 alert('Mohon lengkapi semua data yang wajib diisi!');
                 return;
             }
 
-            if (!fotoKTP) {
+            if (!document.getElementById('fotoktp').files[0]) {
                 alert('Mohon upload Foto KTP!');
                 return;
             }
 
-            if (!tglMulaiVal || !jamMulai || !lokasiMulai || !tglSelesaiVal || !jamSelesai || !lokasiSelesai) {
+            if (!data.tgl_mulai || !data.jam_mulai || !data.lokasi_mulai || 
+                !data.tgl_selesai || !data.jam_selesai || !data.lokasi_selesai) {
                 alert('Mohon lengkapi detail penyewaan!');
                 return;
             }
 
-            if (!jenisKendaraan || !jumlahKendaraan) {
+            if (!data.kendaraan_nama || !data.jumlah) {
                 alert('Mohon pilih jenis kendaraan dan jumlah!');
                 return;
             }
 
-            if (!identitas1 || !identitas2 || !identitas3) {
+            if (!data.identitas1 || !data.identitas2 || !data.identitas3) {
                 alert('Mohon pilih minimal 3 identitas jaminan!');
                 return;
             }
 
-            if (!agree) {
+            if (!document.getElementById('agree').checked) {
                 alert('Mohon centang persetujuan ketentuan!');
                 return;
             }
 
-            // Format tanggal ke Indonesia
-            const formatTanggal = (dateStr) => {
-                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                return new Date(dateStr).toLocaleDateString('id-ID', options);
-            };
+            // ===== SIMPAN KE DATABASE DULU =====
+            const btnSubmit = document.querySelector('.btn-submit');
+            const originalText = btnSubmit.innerHTML;
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan booking...';
 
-            // Format Pesan WhatsApp yang rapi
-            const pesan = `📋 *FORM BOOKING BAYANGTRANS*%0A` +
-                          `━━━━━━━━━━━━━━━━━━━━%0A%0A` +
-                          
-                          ` *DATA PEMESAN*%0A` +
-                          `• Nama: ${nama}%0A` +
-                          `• Instagram: ${instagram}%0A` +
-                          `• Facebook: ${facebook}%0A` +
-                          `• No HP: ${nohp1}%0A` +
-                          `• No WA: ${nowa2}%0A` +
-                          `• No Rekening: ${norek}%0A` +
-                          `• Pekerjaan: ${pekerjaan}%0A` +
-                          `• Foto KTP: ✅ Terlampir (akan dikirim setelah ini)%0A%0A` +
-                          
-                          `📅 *DETAIL PENYEWAAN*%0A` +
-                          `• Mulai: ${formatTanggal(tglMulaiVal)}, ${jamMulai} WIB%0A` +
-                          `• Lokasi Mulai: ${lokasiMulai}%0A` +
-                          `• Selesai: ${formatTanggal(tglSelesaiVal)}, ${jamSelesai} WIB%0A` +
-                          `• Lokasi Selesai: ${lokasiSelesai}%0A` +
-                          `• Kendaraan: ${jenisKendaraan}%0A` +
-                          `• Jumlah: ${jumlahKendaraan} unit%0A%0A` +
-                          
-                          `🪪 *IDENTITAS JAMINAN*%0A` +
-                          `1. ${identitas1}%0A` +
-                          `2. ${identitas2}%0A` +
-                          `3. ${identitas3}%0A%0A` +
-                          
-                          `━━━━━━━━━━━━━━━━━━━━%0A` +
-                          `Saya telah membaca dan menyetujui semua ketentuan.%0A` +
-                          `Mohon konfirmasi ketersediaan dan info DP.%0A%0A` +
-                          `Terima kasih `;
+            try {
+                const response = await fetch('api/booking.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
 
-            // Buka WhatsApp dengan pesan
-            const nomorAdmin = '6281263860005';
-            const waURL = `https://wa.me/${nomorAdmin}?text=${pesan}`;
-            
-            // Tampilkan instruksi kirim foto KTP
-            setTimeout(() => {
-                alert('✅ Form berhasil dikirim!\n\n📸 JANGAN LUPA:\nKirim Foto KTP Anda via WhatsApp ke admin setelah ini.\n\nTerima kasih!');
-            }, 500);
+                const result = await response.json();
 
-            window.open(waURL, '_blank');
+                if (result.success) {
+                    // Simpan berhasil, lanjut ke WhatsApp
+                    btnSubmit.innerHTML = '<i class="fas fa-check"></i> Booking tersimpan! Mengarahkan ke WhatsApp...';
+                    
+                    setTimeout(() => {
+                        kirimKeWhatsApp(data);
+                    }, 1000);
+                } else {
+                    throw new Error(result.error || 'Gagal menyimpan booking');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                
+                // Jika database gagal, tetap lanjut ke WhatsApp (fallback)
+                const lanjutkan = confirm(
+                    'Gagal menyimpan ke database.\n\n' +
+                    'Apakah Anda tetap ingin melanjutkan booking via WhatsApp?\n\n' +
+                    'Error: ' + error.message
+                );
+                
+                if (lanjutkan) {
+                    kirimKeWhatsApp(data);
+                } else {
+                    btnSubmit.disabled = false;
+                    btnSubmit.innerHTML = originalText;
+                }
+            }
         });
     }
 });
+
+// Fungsi kirim ke WhatsApp
+function kirimKeWhatsApp(data) {
+    const formatTanggal = (dateStr) => {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateStr).toLocaleDateString('id-ID', options);
+    };
+
+    const pesan = `📋 *FORM BOOKING BAYANGTRANS*%0A` +
+                  `━━━━━━━━━━━━━━━━━━━━%0A%0A` +
+                  `👤 *DATA PEMESAN*%0A` +
+                  `• Nama: ${data.nama}%0A` +
+                  `• Instagram: ${data.instagram}%0A` +
+                  `• Facebook: ${data.facebook || '-'}%0A` +
+                  `• No HP: ${data.nohp1}%0A` +
+                  `• No WA: ${data.nowa2}%0A` +
+                  `• No Rekening: ${data.norek || '-'}%0A` +
+                  `• Pekerjaan: ${data.pekerjaan}%0A` +
+                  `• Foto KTP: ✅ Akan dikirim setelah ini%0A%0A` +
+                  `📅 *DETAIL PENYEWAAN*%0A` +
+                  `• Mulai: ${formatTanggal(data.tgl_mulai)}, ${data.jam_mulai} WIB%0A` +
+                  `• Lokasi Mulai: ${data.lokasi_mulai}%0A` +
+                  `• Selesai: ${formatTanggal(data.tgl_selesai)}, ${data.jam_selesai} WIB%0A` +
+                  `• Lokasi Selesai: ${data.lokasi_selesai}%0A` +
+                  `• Kendaraan: ${data.kendaraan_nama}%0A` +
+                  `• Jumlah: ${data.jumlah} unit%0A%0A` +
+                  `🪪 *IDENTITAS JAMINAN*%0A` +
+                  `1. ${data.identitas1}%0A` +
+                  `2. ${data.identitas2}%0A` +
+                  `3. ${data.identitas3}%0A%0A` +
+                  `━━━━━━━━━━━━━━━━━━━━%0A` +
+                  `Saya telah membaca dan menyetujui semua ketentuan.%0A` +
+                  `Mohon konfirmasi ketersediaan dan info DP.%0A%0A` +
+                  `Terima kasih 🙏`;
+
+    // Tampilkan instruksi kirim foto KTP
+    setTimeout(() => {
+        alert('✅ Booking berhasil disimpan!\n\n📸 JANGAN LUPA:\nKirim Foto KTP Anda via WhatsApp ke admin setelah ini.\n\nTerima kasih!');
+    }, 500);
+
+    const nomorAdmin = '6281263860005';
+    window.open(`https://wa.me/${nomorAdmin}?text=${pesan}`, '_blank');
+}
