@@ -1,14 +1,15 @@
-// API Base URL
+// API Base URL - Sesuaikan dengan URL XAMPP kamu
 const API_BASE = 'http://localhost/bayangtrans/api';
 
-// Get semua kendaraan
+// Get semua kendaraan dari database
 async function getKendaraanFromDB() {
     try {
         const response = await fetch(`${API_BASE}/kendaraan.php`);
-        const data = await response.json();
-        return data;
+        if (!response.ok) throw new Error('Network error');
+        return await response.json();
     } catch (error) {
         console.error('Error fetching kendaraan:', error);
+        showToast('Gagal memuat data kendaraan!', 'error');
         return [];
     }
 }
@@ -19,11 +20,12 @@ async function updateKetersediaan(id, tersedia) {
         const response = await fetch(`${API_BASE}/kendaraan.php`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
             body: JSON.stringify({ id, tersedia })
         });
         return await response.json();
     } catch (error) {
-        console.error('Error updating ketersediaan:', error);
+        console.error('Error updating:', error);
         return { success: false };
     }
 }
@@ -34,11 +36,12 @@ async function updateHarga(id, harga) {
         const response = await fetch(`${API_BASE}/kendaraan.php`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
             body: JSON.stringify({ id, harga })
         });
         return await response.json();
     } catch (error) {
-        console.error('Error updating harga:', error);
+        console.error('Error updating:', error);
         return { success: false };
     }
 }
@@ -49,6 +52,7 @@ async function loginAdmin(username, password) {
         const response = await fetch(`${API_BASE}/login.php`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
             body: JSON.stringify({ username, password })
         });
         const data = await response.json();
@@ -67,34 +71,30 @@ async function loginAdmin(username, password) {
 // Cek status login
 async function checkLoginStatus() {
     try {
-        const response = await fetch(`${API_BASE}/login.php`);
+        const response = await fetch(`${API_BASE}/login.php`, {
+            credentials: 'include'
+        });
         return await response.json();
     } catch (error) {
         return { logged_in: false };
     }
 }
 
-// Logout
+// Logout admin
 async function logoutAdmin() {
     try {
-        await fetch(`${API_BASE}/login.php`, { method: 'DELETE' });
+        await fetch(`${API_BASE}/login.php`, { 
+            method: 'DELETE',
+            credentials: 'include'
+        });
         sessionStorage.clear();
     } catch (error) {
         console.error('Error logout:', error);
     }
 }
 
-// Submit booking
-async function submitBooking(data) {
-    try {
-        const response = await fetch(`${API_BASE}/booking.php`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-        return await response.json();
-    } catch (error) {
-        console.error('Error submit booking:', error);
-        return { success: false };
-    }
+// Toast helper (jika belum ada di halaman)
+function showToast(message, type = 'success') {
+    // Implementasi toast bisa di-override di setiap halaman
+    console.log(`[${type.toUpperCase()}] ${message}`);
 }
