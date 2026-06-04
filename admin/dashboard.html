@@ -14,6 +14,7 @@
             min-height: 100vh;
         }
         
+        /* Loading Overlay */
         .loading-overlay {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -41,8 +42,11 @@
             animation: spin 1s linear infinite;
         }
         
-        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
         
+        /* Navbar */
         .navbar {
             background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
             color: white;
@@ -71,42 +75,41 @@
             align-items: center;
             gap: 6px;
             padding: 4px 12px;
+            background: rgba(16, 185, 129, 0.2);
             border-radius: 50px;
             font-size: 0.75rem;
             font-weight: 600;
-            -webkit-text-fill-color: initial;
+            color: #10b981;
+            -webkit-text-fill-color: #10b981;
         }
         
         .db-status::before {
             content: '';
             width: 8px;
             height: 8px;
+            background: #10b981;
             border-radius: 50%;
             animation: pulse 2s infinite;
         }
         
-        .db-status.online {
-            background: rgba(16, 185, 129, 0.2);
-            color: #10b981;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
-        .db-status.online::before { background: #10b981; }
         
         .db-status.offline {
             background: rgba(245, 158, 11, 0.2);
             color: #f59e0b;
         }
+        
         .db-status.offline::before { background: #f59e0b; }
         
         .db-status.error {
             background: rgba(239, 68, 68, 0.2);
             color: #ef4444;
         }
-        .db-status.error::before { background: #ef4444; }
         
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
+        .db-status.error::before { background: #ef4444; }
         
         .navbar-user {
             display: flex;
@@ -147,6 +150,7 @@
         
         .btn-logout:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4); }
         
+        /* Container */
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -168,7 +172,10 @@
             margin-bottom: 8px;
         }
         
-        .page-header p { color: #6b7280; font-size: 0.95rem; }
+        .page-header p {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
         
         .btn-refresh {
             background: linear-gradient(135deg, #667eea, #764ba2);
@@ -188,6 +195,7 @@
         .btn-refresh:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
         .btn-refresh:disabled { opacity: 0.6; cursor: not-allowed; }
         
+        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -261,6 +269,7 @@
             font-weight: 600;
         }
         
+        /* Quick Actions */
         .quick-actions {
             background: white;
             padding: 30px;
@@ -309,6 +318,7 @@
         .action-btn i { font-size: 2rem; }
         .action-btn span { font-size: 0.95rem; font-weight: 600; }
         
+        /* Content Grid */
         .content-grid {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -365,6 +375,7 @@
         .vehicle-list::-webkit-scrollbar { width: 6px; }
         .vehicle-list::-webkit-scrollbar-track { background: #f3f4f6; border-radius: 10px; }
         .vehicle-list::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+        .vehicle-list::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
         
         .vehicle-item {
             display: flex;
@@ -435,6 +446,7 @@
             line-height: 1.6;
         }
         
+        /* Toast */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -461,6 +473,7 @@
             to { transform: translateX(0); opacity: 1; }
         }
         
+        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 40px 20px;
@@ -486,14 +499,14 @@
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="spinner"></div>
-        <p style="color: #6b7280; font-weight: 600;">Memuat data dari database...</p>
+        <p style="color: #6b7280; font-weight: 600;">Memuat dashboard...</p>
     </div>
 
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-brand">
             <i class="fas fa-tachometer-alt"></i> Dashboard Admin
-            <span class="db-status offline" id="dbStatus">Checking...</span>
+            <span class="db-status" id="dbStatus">Online</span>
         </div>
         <div class="navbar-user">
             <div class="user-info">
@@ -603,12 +616,12 @@
                 
                 <div class="info-box">
                     <h3><i class="fas fa-database"></i> Sumber Data</h3>
-                    <p id="info-sumber-data">Menghubungkan ke database MySQL...</p>
+                    <p id="info-sumber-data">Data diambil dari <strong>localStorage</strong>. Sinkronkan dengan database MySQL untuk fitur real-time.</p>
                 </div>
                 
                 <div class="info-box" style="background: linear-gradient(135deg, #fef3c7, #fde68a); border-left-color: #f59e0b;">
                     <h3 style="color: #92400e;"><i class="fas fa-lightbulb"></i> Tips Admin</h3>
-                    <p>Gunakan menu <strong>Pengaturan</strong> untuk mengubah harga dan ketersediaan. Perubahan akan tersinkron ke semua device.</p>
+                    <p>Gunakan menu <strong>Pengaturan</strong> untuk mengubah harga dan ketersediaan kendaraan. Klik tombol <strong>Refresh</strong> untuk melihat data terbaru.</p>
                 </div>
                 
                 <div class="info-box" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); border-left-color: #10b981;">
@@ -618,7 +631,7 @@
                 
                 <div class="info-box" style="background: linear-gradient(135deg, #fce7f3, #fbcfe8); border-left-color: #ec4899;">
                     <h3 style="color: #9d174d;"><i class="fas fa-sync"></i> Auto Refresh</h3>
-                    <p>Data otomatis di-refresh setiap <strong>60 detik</strong> dari database MySQL.</p>
+                    <p>Data akan otomatis di-refresh setiap <strong>60 detik</strong> untuk memastikan informasi selalu terbaru.</p>
                 </div>
             </div>
         </div>
@@ -631,30 +644,57 @@
     </div>
 
     <script>
+        // ===== DATABASE DEFAULT (FALLBACK) =====
+        const defaultKendaraan = [
+            // Motor
+            { id: 1, nama: "Beat Old", tipe: "Motor", harga: 60000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+            { id: 2, nama: "Beat New", tipe: "Motor", harga: 70000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+            { id: 3, nama: "Beat Street", tipe: "Motor", harga: 75000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+            { id: 4, nama: "All New Scoopy", tipe: "Motor", harga: 85000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+            { id: 5, nama: "New Vario", tipe: "Motor", harga: 100000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+            { id: 6, nama: "All-new Vario", tipe: "Motor", harga: 110000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+            { id: 7, nama: "Stylo", tipe: "Motor", harga: 120000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+            { id: 8, nama: "Nmax", tipe: "Motor", harga: 130000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+            // Mobil
+            { id: 11, nama: "Avanza Grand", tipe: "Mobil", harga: 300000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+            { id: 12, nama: "Mobilio", tipe: "Mobil", harga: 300000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+            { id: 13, nama: "Ayla", tipe: "Mobil", harga: 275000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+            { id: 14, nama: "Sigra", tipe: "Mobil", harga: 275000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+            { id: 15, nama: "New Xenia", tipe: "Mobil", harga: 350000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+            { id: 16, nama: "Inova Grand", tipe: "Mobil", harga: 400000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+            { id: 17, nama: "Inova Reborn", tipe: "Mobil", harga: 550000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+            { id: 18, nama: "Brio", tipe: "Mobil", harga: 300000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] }
+        ];
+
         // ===== STATE =====
         let allKendaraan = [];
+        let dataSource = 'localStorage';
         let refreshInterval;
         const API_BASE = '../api';
 
         // ===== INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', async () => {
-            // Cek login
-            const isLoggedIn = sessionStorage.getItem('admin_logged_in') === 'true';
+            // Cek login - gunakan localStorage untuk kompatibilitas
+            const isLoggedIn = sessionStorage.getItem('admin_logged_in') === 'true' || 
+                              localStorage.getItem('admin_logged_in') === 'true';
             
             if (!isLoggedIn) {
+                // Jika belum login, redirect ke login
                 window.location.href = 'login.html';
                 return;
             }
 
             // Set admin info
-            const adminName = sessionStorage.getItem('admin_name') || 'Administrator';
+            const adminName = sessionStorage.getItem('admin_name') || 
+                             localStorage.getItem('admin_name') || 
+                             'Administrator';
             document.getElementById('admin-name').textContent = adminName;
             document.getElementById('welcome-name').textContent = adminName;
 
-            // Load data
+            // Load data dengan timeout
             await loadDashboard();
 
-            // Hide loading
+            // Hide loading (dengan delay minimum agar smooth)
             setTimeout(() => {
                 document.getElementById('loadingOverlay').classList.add('hidden');
             }, 500);
@@ -663,57 +703,74 @@
             refreshInterval = setInterval(loadDashboard, 60000);
         });
 
-        // ===== LOAD DATA DARI API DATABASE =====
+        // ===== LOAD DATA =====
         async function loadDashboard() {
             try {
+                // Coba load dari API dulu (dengan timeout 3 detik)
                 const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                const timeoutId = setTimeout(() => controller.abort(), 3000);
                 
-                const response = await fetch(`${API_BASE}/kendaraan.php`, {
-                    signal: controller.signal,
-                    cache: 'no-store'
-                });
-                
-                clearTimeout(timeoutId);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
+                try {
+                    const response = await fetch(`${API_BASE}/kendaraan.php`, {
+                        signal: controller.signal
+                    });
+                    clearTimeout(timeoutId);
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        if (Array.isArray(data) && data.length > 0) {
+                            allKendaraan = data;
+                            dataSource = 'MySQL Database';
+                            setDbStatus('online');
+                            document.getElementById('info-sumber-data').innerHTML = 
+                                'Data diambil dari <strong>MySQL Database</strong> (XAMPP). Real-time sync aktif.';
+                        } else {
+                            throw new Error('Data kosong');
+                        }
+                    } else {
+                        throw new Error('API error');
+                    }
+                } catch (apiError) {
+                    console.log('API tidak tersedia, menggunakan localStorage:', apiError.message);
+                    
+                    // Fallback ke localStorage
+                    const localData = localStorage.getItem('bayangtrans_kendaraan');
+                    if (localData) {
+                        const parsed = JSON.parse(localData);
+                        // Format data dari localStorage (objek motor & mobil)
+                        if (parsed.motor && parsed.mobil) {
+                            allKendaraan = [...parsed.motor, ...parsed.mobil];
+                        } else if (Array.isArray(parsed)) {
+                            allKendaraan = parsed;
+                        } else {
+                            allKendaraan = defaultKendaraan;
+                        }
+                        dataSource = 'localStorage';
+                        setDbStatus('offline');
+                        document.getElementById('info-sumber-data').innerHTML = 
+                            'Data diambil dari <strong>localStorage</strong> browser. Sinkronkan dengan database MySQL untuk fitur real-time.';
+                    } else {
+                        // Fallback terakhir: data default
+                        allKendaraan = defaultKendaraan;
+                        dataSource = 'Default (bawaan)';
+                        setDbStatus('offline');
+                        document.getElementById('info-sumber-data').innerHTML = 
+                            'Menggunakan <strong>data bawaan</strong>. Silakan atur kendaraan di menu Pengaturan.';
+                    }
                 }
-                
-                const data = await response.json();
-                
-                if (!Array.isArray(data) || data.length === 0) {
-                    throw new Error('Data kosong');
-                }
-                
-                // Data berhasil dimuat dari database
-                allKendaraan = data;
-                setDbStatus('online');
-                
-                document.getElementById('info-sumber-data').innerHTML = 
-                    'Data diambil dari <strong>MySQL Database</strong> (XAMPP). Perubahan tersinkron real-time ke semua device. ✅';
-                
+
                 updateStats();
                 filterVehicles();
                 
             } catch (error) {
                 console.error('Load error:', error);
-                allKendaraan = [];
+                // Fallback ke data default
+                allKendaraan = defaultKendaraan;
+                dataSource = 'Default (bawaan)';
                 setDbStatus('error');
-                
-                document.getElementById('info-sumber-data').innerHTML = 
-                    '<strong style="color:#dc2626;">⚠️ Gagal terhubung ke database!</strong><br>Pastikan:<br>1. XAMPP Apache & MySQL running<br>2. File <code>api/kendaraan.php</code> ada<br>3. Database <code>bayangtrans_db</code> sudah dibuat';
-                
                 updateStats();
-                document.getElementById('vehicle-list').innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-exclamation-triangle" style="color:#ef4444;"></i>
-                        <p style="color:#ef4444;">Gagal memuat data dari database</p>
-                        <p style="font-size:0.8rem;">Cek koneksi XAMPP dan file API</p>
-                    </div>
-                `;
-                
-                showToast('Gagal terhubung ke database!', 'error');
+                filterVehicles();
+                showToast('Menggunakan data default', 'warning');
             }
         }
 
@@ -728,10 +785,14 @@
                 dbStatus.classList.add('online');
                 dbStatus.textContent = 'MySQL Connected';
                 if (dataSourceEl) dataSourceEl.textContent = 'Data dari MySQL';
+            } else if (status === 'offline') {
+                dbStatus.classList.add('offline');
+                dbStatus.textContent = 'Offline Mode';
+                if (dataSourceEl) dataSourceEl.textContent = 'Data dari localStorage';
             } else {
                 dbStatus.classList.add('error');
-                dbStatus.textContent = 'DB Error';
-                if (dataSourceEl) dataSourceEl.textContent = 'Gagal koneksi';
+                dbStatus.textContent = 'Error';
+                if (dataSourceEl) dataSourceEl.textContent = 'Data default';
             }
         }
 
@@ -746,7 +807,8 @@
             document.getElementById('motor-tersedia').textContent = motor.filter(m => m.tersedia).length;
             document.getElementById('mobil-tersedia').textContent = mobil.filter(m => m.tersedia).length;
             
-            const totalPerHari = allKendaraan.reduce((sum, k) => sum + (k.harga || 0), 0);
+            // Hitung potensi pendapatan per hari
+            const totalPerHari = allKendaraan.reduce((sum, k) => sum + k.harga, 0);
             document.getElementById('potensi-pendapatan').textContent = 
                 'Rp ' + totalPerHari.toLocaleString('id-ID');
         }
@@ -786,7 +848,7 @@
                         </div>
                         <div class="vehicle-item-info">
                             <h4>${item.nama}</h4>
-                            <p>Rp ${(item.harga || 0).toLocaleString('id-ID')}/hari • ${item.tipe}</p>
+                            <p>Rp ${item.harga.toLocaleString('id-ID')}/hari • ${item.tipe}</p>
                         </div>
                         <span class="status-badge ${item.tersedia ? 'status-available' : 'status-unavailable'}">
                             ${item.tersedia ? '✓ Tersedia' : '✗ Tidak'}
@@ -807,7 +869,7 @@
             setTimeout(() => {
                 btn.disabled = false;
                 btn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh Data';
-                showToast('Data berhasil di-refresh dari database!', 'success');
+                showToast('Data berhasil di-refresh!', 'success');
             }, 500);
         }
 
@@ -815,7 +877,11 @@
         function doLogout() {
             if (confirm('Yakin ingin logout?')) {
                 if (refreshInterval) clearInterval(refreshInterval);
-                sessionStorage.clear();
+                sessionStorage.removeItem('admin_logged_in');
+                sessionStorage.removeItem('admin_username');
+                sessionStorage.removeItem('admin_name');
+                localStorage.removeItem('admin_logged_in');
+                localStorage.removeItem('admin_name');
                 window.location.href = 'login.html';
             }
         }
