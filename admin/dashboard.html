@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - BayangTrans</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../js/admin-data.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            min-height: 100vh;
+        }
+        
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: white;
+            padding: 20px 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .navbar-user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-info {
+            text-align: right;
+        }
+        
+        .user-info h4 { font-size: 0.95rem; margin-bottom: 2px; }
+        .user-info p { font-size: 0.75rem; color: #9ca3af; }
+        
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .btn-logout {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-logout:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4); }
+        
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        .page-header {
+            margin-bottom: 30px;
+        }
+        
+        .page-header h1 {
+            font-size: 2rem;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        
+        .page-header p {
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+        
+        .stat-card.motor::before { background: linear-gradient(90deg, #10b981, #059669); }
+        .stat-card.mobil::before { background: linear-gradient(90deg, #f59e0b, #d97706); }
+        .stat-card.booking::before { background: linear-gradient(90deg, #667eea, #764ba2); }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card.motor .stat-icon { background: linear-gradient(135deg, #10b981, #059669); }
+        .stat-card.mobil .stat-icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .stat-card.booking .stat-icon { background: linear-gradient(135deg, #667eea, #764ba2); }
+        
+        .stat-card h3 {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .stat-card .number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card .trend {
+            font-size: 0.85rem;
+            color: #10b981;
+            font-weight: 600;
+        }
+        
+        /* Quick Actions */
+        .quick-actions {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+        
+        .quick-actions h2 {
+            font-size: 1.3rem;
+            color: #1f2937;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .action-btn {
+            padding: 25px 20px;
+            background: linear-gradient(135deg, #f9fafb, #f3f4f6);
+            border-radius: 16px;
+            text-align: center;
+            text-decoration: none;
+            color: #1f2937;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .action-btn:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .action-btn i {
+            font-size: 2rem;
+        }
+        
+        .action-btn span {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+        
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+        
+        .content-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .content-card h2 {
+            font-size: 1.3rem;
+            color: #1f2937;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .vehicle-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .vehicle-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .vehicle-item:hover {
+            background: #f3f4f6;
+            transform: translateX(5px);
+        }
+        
+        .vehicle-item-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .vehicle-item.motor .vehicle-item-icon { background: linear-gradient(135deg, #10b981, #059669); }
+        .vehicle-item.mobil .vehicle-item-icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        
+        .vehicle-item-info { flex: 1; }
+        .vehicle-item-info h4 { font-size: 0.95rem; margin-bottom: 3px; color: #1f2937; }
+        .vehicle-item-info p { font-size: 0.8rem; color: #6b7280; }
+        
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        
+        .status-available { background: #d1fae5; color: #065f46; }
+        .status-unavailable { background: #fee2e2; color: #991b1b; }
+        
+        .info-box {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .info-box h3 {
+            color: #1e40af;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .info-box p {
+            color: #374151;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .navbar { flex-direction: column; gap: 15px; }
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <i class="fas fa-tachometer-alt"></i> Dashboard Admin
+        </div>
+        <div class="navbar-user">
+            <div class="user-info">
+                <h4 id="admin-name">Administrator</h4>
+                <p>Super Admin</p>
+            </div>
+            <div class="user-avatar">A</div>
+            <button class="btn-logout" onclick="doLogout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-header">
+            <h1>Selamat Datang, <span id="welcome-name">Administrator</span>! 👋</h1>
+            <p>Kelola kendaraan dan pengaturan BayangTrans dari sini</p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card motor">
+                <div class="stat-icon"><i class="fas fa-motorcycle"></i></div>
+                <h3>Total Motor</h3>
+                <div class="number" id="total-motor">10</div>
+                <div class="trend"><i class="fas fa-check-circle"></i> <span id="motor-tersedia">10</span> tersedia</div>
+            </div>
+            
+            <div class="stat-card mobil">
+                <div class="stat-icon"><i class="fas fa-car"></i></div>
+                <h3>Total Mobil</h3>
+                <div class="number" id="total-mobil">8</div>
+                <div class="trend"><i class="fas fa-check-circle"></i> <span id="mobil-tersedia">8</span> tersedia</div>
+            </div>
+            
+            <div class="stat-card booking">
+                <div class="stat-icon"><i class="fas fa-clipboard-list"></i></div>
+                <h3>Total Kendaraan</h3>
+                <div class="number" id="total-kendaraan">18</div>
+                <div class="trend"><i class="fas fa-chart-line"></i> Semua unit terdaftar</div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <h2><i class="fas fa-bolt" style="color: #f59e0b;"></i> Aksi Cepat</h2>
+            <div class="action-grid">
+                <a href="settings.html" class="action-btn">
+                    <i class="fas fa-cog"></i>
+                    <span>Pengaturan Kendaraan</span>
+                </a>
+                <a href="../index.html" target="_blank" class="action-btn">
+                    <i class="fas fa-external-link-alt"></i>
+                    <span>Lihat Website</span>
+                </a>
+                <a href="../kendaraan.html" target="_blank" class="action-btn">
+                    <i class="fas fa-motorcycle"></i>
+                    <span>Daftar Kendaraan</span>
+                </a>
+                <a href="https://wa.me/6281263860005" target="_blank" class="action-btn">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp Admin</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <div class="content-card">
+                <h2><i class="fas fa-list" style="color: #667eea;"></i> Daftar Kendaraan</h2>
+                <div class="vehicle-list" id="vehicle-list">
+                    <!-- Akan di-generate oleh JavaScript -->
+                </div>
+            </div>
+            
+            <div class="content-card">
+                <h2><i class="fas fa-info-circle" style="color: #10b981;"></i> Informasi</h2>
+                
+                <div class="info-box">
+                    <h3><i class="fas fa-lightbulb"></i> Tips Admin</h3>
+                    <p>Gunakan menu Pengaturan untuk mengubah harga dan ketersediaan kendaraan. Perubahan akan langsung tersimpan dan terlihat di website.</p>
+                </div>
+                
+                <div class="info-box" style="background: linear-gradient(135deg, #fef3c7, #fde68a); border-left-color: #f59e0b;">
+                    <h3 style="color: #92400e;"><i class="fas fa-exclamation-triangle"></i> Penting</h3>
+                    <p>Selalu update status ketersediaan kendaraan setelah ada booking untuk menghindari double booking.</p>
+                </div>
+                
+                <div class="info-box" style="background: linear-gradient(135deg, #d1fae5, #a7f3d0); border-left-color: #10b981;">
+                    <h3 style="color: #065f46;"><i class="fas fa-shield-alt"></i> Keamanan</h3>
+                    <p>Jangan bagikan kredensial login admin kepada siapapun. Logout setelah selesai menggunakan panel admin.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cek login
+        if (!isAdminLoggedIn()) {
+            window.location.href = '../admin/login.html';
+        } else {
+            const username = sessionStorage.getItem('admin_username') || 'Administrator';
+            document.getElementById('admin-name').textContent = username;
+            document.getElementById('welcome-name').textContent = username;
+        }
+
+        function doLogout() {
+            if (confirm('Yakin ingin logout?')) {
+                logoutAdmin();
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Load data kendaraan
+        function loadDashboard() {
+            const data = getKendaraan();
+            const allVehicles = [...data.motor, ...data.mobil];
+            
+            // Update stats
+            document.getElementById('total-motor').textContent = data.motor.length;
+            document.getElementById('total-mobil').textContent = data.mobil.length;
+            document.getElementById('total-kendaraan').textContent = allVehicles.length;
+            document.getElementById('motor-tersedia').textContent = data.motor.filter(m => m.tersedia).length;
+            document.getElementById('mobil-tersedia').textContent = data.mobil.filter(m => m.tersedia).length;
+            
+            // Render vehicle list (ambil 5 pertama)
+            const vehicleList = document.getElementById('vehicle-list');
+            const recentVehicles = allVehicles.slice(0, 5);
+            
+            vehicleList.innerHTML = recentVehicles.map(item => {
+                const isMotor = data.motor.find(m => m.id === item.id);
+                return `
+                    <div class="vehicle-item ${isMotor ? 'motor' : 'mobil'}">
+                        <div class="vehicle-item-icon">
+                            <i class="fas ${isMotor ? 'fa-motorcycle' : 'fa-car'}"></i>
+                        </div>
+                        <div class="vehicle-item-info">
+                            <h4>${item.nama}</h4>
+                            <p>Rp ${item.harga.toLocaleString('id-ID')}/hari</p>
+                        </div>
+                        <span class="status-badge ${item.tersedia ? 'status-available' : 'status-unavailable'}">
+                            ${item.tersedia ? '✓ Tersedia' : '✗ Tidak'}
+                        </span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadDashboard);
+    </script>
+
+</body>
+</html>
