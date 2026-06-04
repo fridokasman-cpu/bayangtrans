@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
+    <script src="js/admin-data.js"></script>
     <style>
         /* ===== ENHANCED HERO SECTION ===== */
         .hero {
@@ -25,10 +26,7 @@
         .hero::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: url('https://images.unsplash.com/photo-1596707328606-2580556f08a3?auto=format&fit=crop&w=1920&q=80') center/cover;
             opacity: 0.15;
             z-index: 1;
@@ -52,12 +50,7 @@
             50% { transform: translateY(-30px) rotate(180deg); }
         }
         
-        .hero-content {
-            position: relative;
-            z-index: 3;
-            text-align: center;
-            max-width: 900px;
-        }
+        .hero-content { position: relative; z-index: 3; text-align: center; max-width: 900px; }
         
         .hero-badge {
             display: inline-flex;
@@ -98,8 +91,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            position: relative;
-            display: inline-block;
         }
         
         .hero p {
@@ -135,6 +126,7 @@
             border: none;
             position: relative;
             overflow: hidden;
+            text-decoration: none;
         }
         
         .btn::before {
@@ -150,10 +142,7 @@
             transition: width 0.6s, height 0.6s;
         }
         
-        .btn:hover::before {
-            width: 300px;
-            height: 300px;
-        }
+        .btn:hover::before { width: 300px; height: 300px; }
         
         .btn-primary {
             background: linear-gradient(135deg, #f59e0b, #fbbf24);
@@ -211,28 +200,13 @@
             margin-bottom: 8px;
         }
         
-        .stat-item p {
-            font-size: 1rem;
-            opacity: 0.9;
-            margin: 0;
-            font-weight: 500;
-        }
+        .stat-item p { font-size: 1rem; opacity: 0.9; margin: 0; font-weight: 500; }
 
-        /* ===== ENHANCED FEATURES SECTION ===== */
+        /* ===== FEATURES ===== */
         .features-section {
             padding: 120px 0;
             background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
             position: relative;
-        }
-        
-        .features-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 200px;
-            background: linear-gradient(180deg, rgba(102, 126, 234, 0.05) 0%, transparent 100%);
         }
         
         .features-grid {
@@ -257,18 +231,14 @@
         .feature-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 4px;
             background: linear-gradient(90deg, #667eea, #764ba2);
             transform: scaleX(0);
             transition: transform 0.4s ease;
         }
         
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
+        .feature-card:hover::before { transform: scaleX(1); }
         
         .feature-card:hover {
             transform: translateY(-15px);
@@ -291,29 +261,12 @@
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
         }
         
-        .feature-card:hover .feature-icon {
-            transform: rotate(360deg) scale(1.1);
-        }
-        
-        .feature-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            color: #1f2937;
-            font-weight: 700;
-        }
-        
-        .feature-card p {
-            color: #6b7280;
-            font-size: 1rem;
-            line-height: 1.7;
-        }
+        .feature-card:hover .feature-icon { transform: rotate(360deg) scale(1.1); }
+        .feature-card h3 { font-size: 1.4rem; margin-bottom: 15px; color: #1f2937; font-weight: 700; }
+        .feature-card p { color: #6b7280; font-size: 1rem; line-height: 1.7; }
 
-        /* ===== ENHANCED POPULAR VEHICLES ===== */
-        .popular-section {
-            padding: 120px 0;
-            background: white;
-            position: relative;
-        }
+        /* ===== POPULAR VEHICLES ===== */
+        .popular-section { padding: 120px 0; background: white; position: relative; }
         
         .popular-grid {
             display: grid;
@@ -357,6 +310,11 @@
             box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
         }
         
+        .vehicle-badge.unavailable {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+        }
+        
         .vehicle-img {
             height: 240px;
             background-color: #f3f4f6;
@@ -369,29 +327,16 @@
         .vehicle-img::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.3) 100%);
             opacity: 0;
             transition: opacity 0.4s ease;
         }
         
-        .vehicle-card:hover .vehicle-img::after {
-            opacity: 1;
-        }
+        .vehicle-card:hover .vehicle-img::after { opacity: 1; }
         
-        .vehicle-info {
-            padding: 30px;
-        }
-        
-        .vehicle-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 12px;
-            font-weight: 700;
-            color: #1f2937;
-        }
+        .vehicle-info { padding: 30px; }
+        .vehicle-info h3 { font-size: 1.5rem; margin-bottom: 12px; font-weight: 700; color: #1f2937; }
         
         .vehicle-rating {
             color: #f59e0b;
@@ -402,11 +347,7 @@
             gap: 5px;
         }
         
-        .vehicle-rating span {
-            color: #6b7280;
-            margin-left: 8px;
-            font-weight: 600;
-        }
+        .vehicle-rating span { color: #6b7280; margin-left: 8px; font-weight: 600; }
         
         .vehicle-price {
             margin-bottom: 25px;
@@ -424,11 +365,7 @@
             background-clip: text;
         }
         
-        .vehicle-price .period {
-            color: #6b7280;
-            font-size: 1rem;
-            font-weight: 500;
-        }
+        .vehicle-price .period { color: #6b7280; font-size: 1rem; font-weight: 500; }
         
         .btn-book {
             display: block;
@@ -442,6 +379,7 @@
             font-size: 1rem;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            text-decoration: none;
         }
         
         .btn-book:hover {
@@ -450,10 +388,27 @@
             box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
         }
         
-        .view-all {
-            text-align: center;
-            margin-top: 50px;
+        .btn-book.disabled {
+            background: linear-gradient(135deg, #9ca3af, #6b7280);
+            cursor: not-allowed;
+            box-shadow: none;
         }
+        
+        .btn-book.disabled:hover { transform: none; }
+        
+        .vehicle-status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .status-available { background: #d1fae5; color: #065f46; }
+        .status-unavailable { background: #fee2e2; color: #991b1b; }
+        
+        .view-all { text-align: center; margin-top: 50px; }
         
         .btn-outline {
             background: transparent;
@@ -466,6 +421,7 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
+            text-decoration: none;
         }
         
         .btn-outline:hover {
@@ -476,23 +432,12 @@
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
         }
 
-        /* ===== HOW IT WORKS SECTION ===== */
+        /* ===== HOW IT WORKS ===== */
         .how-it-works {
             padding: 120px 0;
             background: linear-gradient(135deg, #f8fafc 0%, #e0e7ff 100%);
             position: relative;
             overflow: hidden;
-        }
-        
-        .how-it-works::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
         }
         
         .steps-grid {
@@ -510,7 +455,6 @@
             background: white;
             border-radius: 24px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            position: relative;
             transition: all 0.4s ease;
         }
         
@@ -534,18 +478,8 @@
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
         }
         
-        .step-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            color: #1f2937;
-            font-weight: 700;
-        }
-        
-        .step-card p {
-            color: #6b7280;
-            line-height: 1.7;
-            font-size: 0.95rem;
-        }
+        .step-card h3 { font-size: 1.3rem; margin-bottom: 15px; color: #1f2937; font-weight: 700; }
+        .step-card p { color: #6b7280; line-height: 1.7; font-size: 0.95rem; }
 
         /* ===== PROMO BANNER ===== */
         .promo-banner {
@@ -557,24 +491,7 @@
             overflow: hidden;
         }
         
-        .promo-banner::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -10%;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: float 8s ease-in-out infinite;
-        }
-        
-        .promo-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            margin: 0 auto;
-        }
+        .promo-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
         
         .promo-badge {
             display: inline-block;
@@ -587,17 +504,8 @@
             border: 2px solid rgba(255, 255, 255, 0.3);
         }
         
-        .promo-content h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            font-weight: 900;
-        }
-        
-        .promo-content p {
-            font-size: 1.2rem;
-            margin-bottom: 35px;
-            opacity: 0.95;
-        }
+        .promo-content h2 { font-size: 2.5rem; margin-bottom: 20px; font-weight: 900; }
+        .promo-content p { font-size: 1.2rem; margin-bottom: 35px; opacity: 0.95; }
         
         .btn-promo {
             background: white;
@@ -611,6 +519,7 @@
             gap: 12px;
             transition: all 0.3s ease;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
         }
         
         .btn-promo:hover {
@@ -618,7 +527,7 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
         }
 
-        /* ===== ENHANCED CTA SECTION ===== */
+        /* ===== CTA ===== */
         .cta-section {
             padding: 120px 0;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -628,38 +537,9 @@
             overflow: hidden;
         }
         
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.2) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: float 10s ease-in-out infinite;
-        }
-        
-        .cta-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .cta-content h2 {
-            font-size: 3rem;
-            margin-bottom: 25px;
-            font-weight: 900;
-            line-height: 1.2;
-        }
-        
-        .cta-content p {
-            font-size: 1.3rem;
-            opacity: 0.95;
-            margin-bottom: 50px;
-            line-height: 1.7;
-        }
+        .cta-content { position: relative; z-index: 2; max-width: 800px; margin: 0 auto; }
+        .cta-content h2 { font-size: 3rem; margin-bottom: 25px; font-weight: 900; line-height: 1.2; }
+        .cta-content p { font-size: 1.3rem; opacity: 0.95; margin-bottom: 50px; line-height: 1.7; }
         
         .btn-whatsapp-large {
             background: linear-gradient(135deg, #25D366, #128C7E);
@@ -673,6 +553,7 @@
             gap: 15px;
             transition: all 0.3s ease;
             box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4);
+            text-decoration: none;
         }
         
         .btn-whatsapp-large:hover {
@@ -681,7 +562,7 @@
             box-shadow: 0 20px 50px rgba(37, 211, 102, 0.6);
         }
 
-        /* ===== ENHANCED FOOTER ===== */
+        /* ===== FOOTER ===== */
         .footer {
             background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
             color: white;
@@ -693,9 +574,7 @@
         .footer::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 4px;
             background: linear-gradient(90deg, #667eea, #764ba2, #f59e0b);
         }
@@ -716,16 +595,9 @@
             background-clip: text;
         }
         
-        .footer-col p {
-            color: #9ca3af;
-            margin: 20px 0;
-            line-height: 1.8;
-        }
+        .footer-col p { color: #9ca3af; margin: 20px 0; line-height: 1.8; }
         
-        .social-links {
-            display: flex;
-            gap: 15px;
-        }
+        .social-links { display: flex; gap: 15px; }
         
         .social-links a {
             width: 45px;
@@ -737,6 +609,8 @@
             justify-content: center;
             transition: all 0.3s ease;
             font-size: 1.2rem;
+            color: white;
+            text-decoration: none;
         }
         
         .social-links a:hover {
@@ -764,32 +638,19 @@
             border-radius: 2px;
         }
         
-        .footer-col ul li {
-            margin-bottom: 15px;
-        }
+        .footer-col ul li { margin-bottom: 15px; }
         
         .footer-col ul li a {
             color: #9ca3af;
             transition: all 0.3s ease;
             display: inline-block;
+            text-decoration: none;
         }
         
-        .footer-col ul li a:hover {
-            color: #f59e0b;
-            transform: translateX(5px);
-        }
+        .footer-col ul li a:hover { color: #f59e0b; transform: translateX(5px); }
         
-        .contact-list li {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            color: #9ca3af;
-        }
-        
-        .contact-list li i {
-            color: #667eea;
-            width: 20px;
-        }
+        .contact-list li { display: flex; align-items: center; gap: 12px; color: #9ca3af; }
+        .contact-list li i { color: #667eea; width: 20px; }
         
         .footer-bottom {
             text-align: center;
@@ -798,6 +659,36 @@
             color: #9ca3af;
             font-size: 0.95rem;
         }
+
+        /* ===== ADMIN ACCESS (Hidden) ===== */
+        .admin-access {
+            position: fixed;
+            bottom: 100px;
+            left: 20px;
+            width: 45px;
+            height: 45px;
+            background: rgba(31, 41, 55, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 998;
+            opacity: 0;
+        }
+        
+        .admin-access:hover {
+            opacity: 1;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        body:hover .admin-access { opacity: 0.5; }
+        body:hover .admin-access:hover { opacity: 1; }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
@@ -831,9 +722,7 @@
                 <i class="fab fa-whatsapp"></i> Hubungi Kami
             </a>
             <div class="hamburger" id="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </div>
         </div>
     </nav>
@@ -854,11 +743,11 @@
             </div>
             <div class="hero-stats">
                 <div class="stat-item">
-                    <h3>500+</h3>
+                    <h3 id="stat-pelanggan">500+</h3>
                     <p>Pelanggan Puas</p>
                 </div>
                 <div class="stat-item">
-                    <h3>50+</h3>
+                    <h3 id="stat-unit">18</h3>
                     <p>Unit Tersedia</p>
                 </div>
                 <div class="stat-item">
@@ -878,30 +767,22 @@
             </div>
             <div class="features-grid">
                 <div class="feature-card fade-in">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
+                    <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
                     <h3>Unit Terawat</h3>
                     <p>Semua kendaraan diservis rutin di bengkel resmi untuk keamanan dan kenyamanan Anda.</p>
                 </div>
                 <div class="feature-card fade-in">
-                    <div class="feature-icon">
-                        <i class="fas fa-tags"></i>
-                    </div>
+                    <div class="feature-icon"><i class="fas fa-tags"></i></div>
                     <h3>Harga Transparan</h3>
                     <p>Tidak ada biaya tersembunyi. Harga yang tertera sudah termasuk asuransi dasar.</p>
                 </div>
                 <div class="feature-card fade-in">
-                    <div class="feature-icon">
-                        <i class="fas fa-truck"></i>
-                    </div>
+                    <div class="feature-icon"><i class="fas fa-truck"></i></div>
                     <h3>Antar Jemput</h3>
                     <p>Free antar jemput ke bandara, stasiun, hotel, atau alamat Anda di area Yogyakarta.</p>
                 </div>
                 <div class="feature-card fade-in">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
+                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
                     <h3>Support 24 Jam</h3>
                     <p>Tim kami siap membantu Anda kapan saja, termasuk bantuan darurat di jalan.</p>
                 </div>
@@ -941,79 +822,15 @@
         </div>
     </section>
 
-    <!-- KENDARAAN POPULER -->
+    <!-- KENDARAAN POPULER (DYNAMIC - dari localStorage) -->
     <section class="popular-section">
         <div class="container">
             <div class="section-header">
                 <span class="section-subtitle">Paling Diminati</span>
                 <h2 class="section-title">Kendaraan Populer</h2>
             </div>
-            <div class="popular-grid">
-                <!-- Honda PCX 160 -->
-                <div class="vehicle-card fade-in">
-                    <div class="vehicle-badge">Motor</div>
-                    <div class="vehicle-img" style="background: url('https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=600&q=80') center/cover;"></div>
-                    <div class="vehicle-info">
-                        <h3>Honda PCX 160</h3>
-                        <div class="vehicle-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <span>(4.9)</span>
-                        </div>
-                        <div class="vehicle-price">
-                            <span class="price">Rp 135.000</span>
-                            <span class="period">/hari</span>
-                        </div>
-                        <a href="booking.html?kendaraan=Honda+PCX+160" class="btn-book">Book Sekarang</a>
-                    </div>
-                </div>
-
-                <!-- Honda ADV 160 -->
-                <div class="vehicle-card fade-in">
-                    <div class="vehicle-badge">Motor</div>
-                    <div class="vehicle-img" style="background: url('https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?auto=format&fit=crop&w=600&q=80') center/cover;"></div>
-                    <div class="vehicle-info">
-                        <h3>Honda ADV 160</h3>
-                        <div class="vehicle-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <span>(4.9)</span>
-                        </div>
-                        <div class="vehicle-price">
-                            <span class="price">Rp 135.000</span>
-                            <span class="period">/hari</span>
-                        </div>
-                        <a href="booking.html?kendaraan=Honda+ADV+160" class="btn-book">Book Sekarang</a>
-                    </div>
-                </div>
-
-                <!-- Toyota Innova -->
-                <div class="vehicle-card fade-in">
-                    <div class="vehicle-badge popular">Mobil</div>
-                    <div class="vehicle-img" style="background: url('https://images.unsplash.com/photo-1609521263047-f8f205293f24?auto=format&fit=crop&w=600&q=80') center/cover;"></div>
-                    <div class="vehicle-info">
-                        <h3>Toyota Innova</h3>
-                        <div class="vehicle-rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <span>(4.9)</span>
-                        </div>
-                        <div class="vehicle-price">
-                            <span class="price">Rp 450.000</span>
-                            <span class="period">/hari</span>
-                        </div>
-                        <a href="booking.html?kendaraan=Toyota+Innova" class="btn-book">Book Sekarang</a>
-                    </div>
-                </div>
+            <div class="popular-grid" id="popular-vehicles">
+                <!-- Akan di-generate oleh JavaScript dari localStorage -->
             </div>
             <div class="view-all">
                 <a href="kendaraan.html" class="btn-outline">Lihat Semua Kendaraan <i class="fas fa-arrow-right"></i></a>
@@ -1102,6 +919,78 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <!-- ADMIN ACCESS (Hidden - klik untuk login) -->
+    <a href="admin/login.html" class="admin-access" title="Admin Login">
+        <i class="fas fa-lock"></i>
+    </a>
+
     <script src="js/main.js"></script>
+    <script>
+        // ===== LOAD KENDARAAN DARI LOCALSTORAGE =====
+        function loadPopularVehicles() {
+            const data = getKendaraan();
+            const container = document.getElementById('popular-vehicles');
+            
+            // Ambil 3 kendaraan populer (PCX, ADV, Inova Reborn)
+            const popular = [
+                data.motor.find(m => m.nama === "PCX 160"),
+                data.motor.find(m => m.nama === "ADV 160"),
+                data.mobil.find(m => m.nama === "Inova Reborn")
+            ].filter(Boolean);
+            
+            // Hitung unit tersedia
+            const allAvailable = [...data.motor, ...data.mobil].filter(k => k.tersedia).length;
+            document.getElementById('stat-unit').textContent = allAvailable;
+            
+            container.innerHTML = popular.map(item => {
+                const tipe = data.motor.find(m => m.id === item.id) ? 'Motor' : 'Mobil';
+                const isAvailable = item.tersedia;
+                
+                return `
+                    <div class="vehicle-card fade-in">
+                        <div class="vehicle-badge ${!isAvailable ? 'unavailable' : (tipe === 'Mobil' ? 'popular' : '')}">
+                            ${!isAvailable ? 'Tidak Tersedia' : tipe}
+                        </div>
+                        <div class="vehicle-img" style="background: url('${item.gambar}') center/cover; ${!isAvailable ? 'filter: grayscale(70%);' : ''}"></div>
+                        <div class="vehicle-info">
+                            <span class="vehicle-status ${isAvailable ? 'status-available' : 'status-unavailable'}">
+                                ${isAvailable ? '✓ Tersedia' : '✗ Sedang Disewa'}
+                            </span>
+                            <h3>${item.nama}</h3>
+                            <div class="vehicle-rating">
+                                ${'<i class="fas fa-star"></i>'.repeat(Math.floor(item.rating))}
+                                <span>(${item.rating})</span>
+                            </div>
+                            <div class="vehicle-price">
+                                <span class="price">Rp ${item.harga.toLocaleString('id-ID')}</span>
+                                <span class="period">/hari</span>
+                            </div>
+                            ${isAvailable 
+                                ? `<a href="booking.html?kendaraan=${encodeURIComponent(item.nama)}" class="btn-book">Book Sekarang</a>`
+                                : `<a href="https://wa.me/6281263860005?text=Halo,%20saya%20mau%20tanya%20ketersediaan%20${encodeURIComponent(item.nama)}" class="btn-book disabled" onclick="alert('Kendaraan ini sedang tidak tersedia. Silakan hubungi admin via WhatsApp.'); return false;">Hubungi Admin</a>`
+                            }
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Re-apply fade animation
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach(el => {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('visible');
+                            }
+                        });
+                    }, { threshold: 0.1 });
+                    observer.observe(el);
+                });
+            }, 100);
+        }
+        
+        // Load saat halaman siap
+        document.addEventListener('DOMContentLoaded', loadPopularVehicles);
+    </script>
 </body>
 </html>

@@ -1,4 +1,7 @@
-// Database Kendaraan Default
+// ============================================
+// DATABASE BAYANGTRANS - CLIENT SIDE
+// ============================================
+
 const defaultKendaraan = {
     motor: [
         { id: 1, nama: "Beat Old", harga: 60000, tersedia: true, gambar: "https://images.unsplash.com/photo-1629814484931-37300b2b0816?auto=format&fit=crop&w=600&q=80", fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"], rating: 4.7 },
@@ -24,44 +27,81 @@ const defaultKendaraan = {
     ]
 };
 
-// Inisialisasi Database di localStorage
+// Default Admin Credentials
+const defaultAdmin = {
+    username: "admin",
+    password: "bayangtrans2024"
+};
+
+// Initialize Database
 function initDatabase() {
     if (!localStorage.getItem('bayangtrans_kendaraan')) {
         localStorage.setItem('bayangtrans_kendaraan', JSON.stringify(defaultKendaraan));
     }
+    if (!localStorage.getItem('bayangtrans_admin')) {
+        localStorage.setItem('bayangtrans_admin', JSON.stringify(defaultAdmin));
+    }
 }
 
-// Get Data Kendaraan
+// Get Data
 function getKendaraan() {
     return JSON.parse(localStorage.getItem('bayangtrans_kendaraan')) || defaultKendaraan;
 }
 
-// Update Ketersediaan
+function getAdmin() {
+    return JSON.parse(localStorage.getItem('bayangtrans_admin')) || defaultAdmin;
+}
+
+// Update Functions
 function updateKetersediaan(id, tersedia) {
     const data = getKendaraan();
-    const semuaKendaraan = [...data.motor, ...data.mobil];
-    const kendaraan = semuaKendaraan.find(k => k.id === id);
-    
-    if (kendaraan) {
-        kendaraan.tersedia = tersedia;
+    const all = [...data.motor, ...data.mobil];
+    const item = all.find(k => k.id === id);
+    if (item) {
+        item.tersedia = tersedia;
         localStorage.setItem('bayangtrans_kendaraan', JSON.stringify(data));
         return true;
     }
     return false;
 }
 
-// Update Harga
 function updateHarga(id, harga) {
     const data = getKendaraan();
-    const semuaKendaraan = [...data.motor, ...data.mobil];
-    const kendaraan = semuaKendaraan.find(k => k.id === id);
-    
-    if (kendaraan) {
-        kendaraan.harga = parseInt(harga);
+    const all = [...data.motor, ...data.mobil];
+    const item = all.find(k => k.id === id);
+    if (item) {
+        item.harga = parseInt(harga);
         localStorage.setItem('bayangtrans_kendaraan', JSON.stringify(data));
         return true;
     }
     return false;
+}
+
+// Login Function
+function loginAdmin(username, password) {
+    const admin = getAdmin();
+    if (username === admin.username && password === admin.password) {
+        sessionStorage.setItem('admin_logged_in', 'true');
+        sessionStorage.setItem('admin_username', username);
+        return true;
+    }
+    return false;
+}
+
+function isAdminLoggedIn() {
+    return sessionStorage.getItem('admin_logged_in') === 'true';
+}
+
+function logoutAdmin() {
+    sessionStorage.removeItem('admin_logged_in');
+    sessionStorage.removeItem('admin_username');
+}
+
+// Reset Database (untuk testing)
+function resetDatabase() {
+    localStorage.removeItem('bayangtrans_kendaraan');
+    localStorage.removeItem('bayangtrans_admin');
+    initDatabase();
 }
 
 // Initialize on load

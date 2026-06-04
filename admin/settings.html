@@ -6,16 +6,10 @@
     <title>Pengaturan - BayangTrans Admin</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/style.css">
     <script src="../js/admin-data.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            background: #f3f4f6; 
-            min-height: 100vh;
-            display: flex;
-        }
+        body { font-family: 'Poppins', sans-serif; background: #f3f4f6; min-height: 100vh; display: flex; }
         
         /* Sidebar */
         .sidebar {
@@ -30,27 +24,15 @@
             z-index: 1000;
         }
         
-        .sidebar-logo {
-            text-align: center;
-            padding-bottom: 25px;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 25px;
-        }
-        
+        .sidebar-logo { text-align: center; padding-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 25px; }
         .sidebar-logo .logo-text {
             font-size: 1.8rem;
             font-weight: 900;
             background: linear-gradient(135deg, #667eea, #764ba2);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
-        
-        .sidebar-logo p {
-            color: #9ca3af;
-            font-size: 0.85rem;
-            margin-top: 5px;
-        }
+        .sidebar-logo p { color: #9ca3af; font-size: 0.85rem; margin-top: 5px; }
         
         .admin-profile {
             display: flex;
@@ -118,13 +100,8 @@
             font-weight: 700;
         }
         
-        /* Main Content */
-        .main-content {
-            margin-left: 280px;
-            padding: 30px;
-            flex: 1;
-            width: calc(100% - 280px);
-        }
+        /* Main */
+        .main-content { margin-left: 280px; padding: 30px; flex: 1; width: calc(100% - 280px); }
         
         .top-bar {
             background: white;
@@ -137,33 +114,13 @@
             align-items: center;
         }
         
-        .top-bar h1 {
-            font-size: 1.8rem;
-            color: #1f2937;
-            font-weight: 700;
-        }
-        
-        .top-bar .breadcrumb {
-            color: #6b7280;
-            font-size: 0.9rem;
-            margin-top: 5px;
-        }
-        
+        .top-bar h1 { font-size: 1.8rem; color: #1f2937; font-weight: 700; }
+        .top-bar .breadcrumb { color: #6b7280; font-size: 0.9rem; margin-top: 5px; }
         .top-bar .breadcrumb a { color: #667eea; text-decoration: none; }
         
         /* Tabs */
-        .tabs-container {
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        
-        .tabs-header {
-            display: flex;
-            background: #f9fafb;
-            border-bottom: 2px solid #e5e7eb;
-        }
+        .tabs-container { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .tabs-header { display: flex; background: #f9fafb; border-bottom: 2px solid #e5e7eb; }
         
         .tab-btn {
             flex: 1;
@@ -193,7 +150,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Info Box */
         .info-box {
             background: linear-gradient(135deg, #eff6ff, #dbeafe);
             border-left: 4px solid #667eea;
@@ -209,7 +165,6 @@
         .info-box h4 { color: #1e40af; margin-bottom: 5px; font-size: 1rem; }
         .info-box p { color: #374151; font-size: 0.9rem; line-height: 1.6; }
         
-        /* Section */
         .section-title {
             display: flex;
             align-items: center;
@@ -224,7 +179,6 @@
         .section-title .icon-box {
             width: 45px;
             height: 45px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -239,7 +193,6 @@
         .section-title h2 { font-size: 1.3rem; color: #1f2937; font-weight: 700; }
         .section-title p { font-size: 0.85rem; color: #6b7280; }
         
-        /* Vehicle Grid */
         .vehicle-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -270,12 +223,7 @@
             margin-bottom: 15px;
         }
         
-        .vehicle-name {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 5px;
-        }
+        .vehicle-name { font-size: 1.1rem; font-weight: 700; color: #1f2937; margin-bottom: 5px; }
         
         .vehicle-type {
             display: inline-block;
@@ -290,7 +238,6 @@
         .vehicle-card.motor .vehicle-type { background: linear-gradient(135deg, #10b981, #059669); }
         .vehicle-card.mobil .vehicle-type { background: linear-gradient(135deg, #f59e0b, #d97706); }
         
-        /* Toggle Switch */
         .status-toggle {
             width: 50px;
             height: 28px;
@@ -328,41 +275,14 @@
             margin-bottom: 12px;
         }
         
-        .vehicle-features {
-            list-style: none;
-            margin-bottom: 15px;
-        }
-        
-        .vehicle-features li {
-            font-size: 0.85rem;
-            color: #6b7280;
-            padding: 4px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
+        .vehicle-features { list-style: none; margin-bottom: 15px; }
+        .vehicle-features li { font-size: 0.85rem; color: #6b7280; padding: 4px 0; display: flex; align-items: center; gap: 8px; }
         .vehicle-features li i { color: #10b981; font-size: 0.8rem; }
         
-        /* Price Edit */
-        .price-edit {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px dashed #e5e7eb;
-        }
+        .price-edit { margin-top: 15px; padding-top: 15px; border-top: 1px dashed #e5e7eb; }
+        .price-edit label { display: block; font-size: 0.85rem; color: #6b7280; margin-bottom: 8px; font-weight: 600; }
         
-        .price-edit label {
-            display: block;
-            font-size: 0.85rem;
-            color: #6b7280;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-        
-        .price-input-group {
-            display: flex;
-            gap: 10px;
-        }
+        .price-input-group { display: flex; gap: 10px; }
         
         .price-input {
             flex: 1;
@@ -374,10 +294,7 @@
             font-weight: 600;
         }
         
-        .price-input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
+        .price-input:focus { outline: none; border-color: #667eea; }
         
         .btn-save {
             padding: 10px 20px;
@@ -392,7 +309,6 @@
         
         .btn-save:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4); }
         
-        /* Share Section */
         .share-section {
             background: linear-gradient(135deg, #667eea, #764ba2);
             padding: 30px;
@@ -413,7 +329,6 @@
             color: #667eea;
             padding: 14px 35px;
             border-radius: 50px;
-            text-decoration: none;
             font-weight: 700;
             transition: all 0.3s ease;
             border: none;
@@ -423,7 +338,6 @@
         
         .btn-share:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         
-        /* Toast */
         .toast {
             position: fixed;
             bottom: 30px;
@@ -468,56 +382,31 @@
         <div class="admin-profile">
             <div class="admin-avatar">A</div>
             <div class="admin-info">
-                <h4>Administrator</h4>
+                <h4 id="admin-name">Administrator</h4>
                 <p>Super Admin</p>
             </div>
         </div>
         
         <div class="nav-section-title">Menu Utama</div>
         <nav class="sidebar-nav">
-            <a href="dashboard.html">
-                <i class="fas fa-home"></i> Dashboard
-            </a>
-            <a href="bookings.html">
-                <i class="fas fa-clipboard-list"></i> Kelola Booking
-                <span class="badge">5</span>
-            </a>
-            <a href="kendaraan-admin.html">
-                <i class="fas fa-motorcycle"></i> Kelola Kendaraan
-            </a>
-            <a href="settings.html" class="active">
-                <i class="fas fa-cog"></i> Pengaturan
-            </a>
-        </nav>
-        
-        <div class="nav-section-title">Laporan</div>
-        <nav class="sidebar-nav">
-            <a href="laporan.html">
-                <i class="fas fa-chart-line"></i> Laporan Pendapatan
-            </a>
-            <a href="pelanggan.html">
-                <i class="fas fa-users"></i> Data Pelanggan
-            </a>
+            <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="settings.html" class="active"><i class="fas fa-cog"></i> Pengaturan</a>
         </nav>
         
         <div class="nav-section-title">Lainnya</div>
         <nav class="sidebar-nav">
-            <a href="../index.html" target="_blank">
-                <i class="fas fa-external-link-alt"></i> Lihat Website
-            </a>
-            <a href="#" onclick="logout()">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </a>
+            <a href="../index.html" target="_blank"><i class="fas fa-external-link-alt"></i> Lihat Website</a>
+            <a href="#" onclick="doLogout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </nav>
     </aside>
 
-    <!-- MAIN CONTENT -->
+    <!-- MAIN -->
     <main class="main-content">
         <div class="top-bar">
             <div>
                 <h1><i class="fas fa-cog" style="color: #667eea;"></i> Pengaturan Kendaraan</h1>
                 <div class="breadcrumb">
-                    <a href="dashboard.html">Admin</a> / <a href="dashboard.html">Dashboard</a> / Pengaturan
+                    <a href="dashboard.html">Admin</a> / Pengaturan
                 </div>
             </div>
         </div>
@@ -541,25 +430,19 @@
                     <i class="fas fa-info-circle"></i>
                     <div>
                         <h4>Kelola Ketersediaan Kendaraan</h4>
-                        <p>Klik tombol untuk mengubah status ketersediaan. Perubahan akan langsung tampil di website publik.</p>
+                        <p>Klik tombol untuk mengubah status. Perubahan akan langsung tampil di website publik.</p>
                     </div>
                 </div>
 
                 <div class="section-title motor">
                     <div class="icon-box"><i class="fas fa-motorcycle"></i></div>
-                    <div>
-                        <h2>Motor</h2>
-                        <p>Kelola ketersediaan motor</p>
-                    </div>
+                    <div><h2>Motor</h2><p>Kelola ketersediaan motor</p></div>
                 </div>
                 <div class="vehicle-grid" id="motor-ketersediaan"></div>
 
                 <div class="section-title mobil">
                     <div class="icon-box"><i class="fas fa-car"></i></div>
-                    <div>
-                        <h2>Mobil</h2>
-                        <p>Kelola ketersediaan mobil</p>
-                    </div>
+                    <div><h2>Mobil</h2><p>Kelola ketersediaan mobil</p></div>
                 </div>
                 <div class="vehicle-grid" id="mobil-ketersediaan"></div>
 
@@ -581,13 +464,9 @@
                         <p>Ubah harga sewa per hari. Perubahan akan langsung berlaku di website.</p>
                     </div>
                 </div>
-
                 <div class="section-title motor">
                     <div class="icon-box"><i class="fas fa-motorcycle"></i></div>
-                    <div>
-                        <h2>Daftar Harga Motor</h2>
-                        <p>Semua harga per hari</p>
-                    </div>
+                    <div><h2>Daftar Harga Motor</h2><p>Semua harga per hari</p></div>
                 </div>
                 <div class="vehicle-grid" id="motor-harga"></div>
             </div>
@@ -601,13 +480,9 @@
                         <p>Ubah harga sewa per hari. Perubahan akan langsung berlaku di website.</p>
                     </div>
                 </div>
-
                 <div class="section-title mobil">
                     <div class="icon-box"><i class="fas fa-car"></i></div>
-                    <div>
-                        <h2>Daftar Harga Mobil</h2>
-                        <p>Semua harga per hari</p>
-                    </div>
+                    <div><h2>Daftar Harga Mobil</h2><p>Semua harga per hari</p></div>
                 </div>
                 <div class="vehicle-grid" id="mobil-harga"></div>
             </div>
@@ -620,6 +495,20 @@
     </div>
 
     <script>
+        // Cek login
+        if (!isAdminLoggedIn()) {
+            window.location.href = 'login.html';
+        } else {
+            document.getElementById('admin-name').textContent = sessionStorage.getItem('admin_username') || 'Administrator';
+        }
+
+        function doLogout() {
+            if (confirm('Yakin ingin logout?')) {
+                logoutAdmin();
+                window.location.href = 'login.html';
+            }
+        }
+
         // Tab Switching
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -630,7 +519,6 @@
             });
         });
 
-        // Render Vehicle Card untuk Ketersediaan
         function renderKetersediaanCard(item, type) {
             return `
                 <div class="vehicle-card ${type} ${item.tersedia ? 'available' : 'unavailable'}" data-id="${item.id}">
@@ -652,7 +540,6 @@
             `;
         }
 
-        // Render Vehicle Card untuk Harga
         function renderHargaCard(item, type) {
             return `
                 <div class="vehicle-card ${type}" data-id="${item.id}">
@@ -679,28 +566,17 @@
             `;
         }
 
-        // Render semua data
         function renderAll() {
             const data = getKendaraan();
-            
-            document.getElementById('motor-ketersediaan').innerHTML = 
-                data.motor.map(m => renderKetersediaanCard(m, 'motor')).join('');
-            
-            document.getElementById('mobil-ketersediaan').innerHTML = 
-                data.mobil.map(m => renderKetersediaanCard(m, 'mobil')).join('');
-            
-            document.getElementById('motor-harga').innerHTML = 
-                data.motor.map(m => renderHargaCard(m, 'motor')).join('');
-            
-            document.getElementById('mobil-harga').innerHTML = 
-                data.mobil.map(m => renderHargaCard(m, 'mobil')).join('');
+            document.getElementById('motor-ketersediaan').innerHTML = data.motor.map(m => renderKetersediaanCard(m, 'motor')).join('');
+            document.getElementById('mobil-ketersediaan').innerHTML = data.mobil.map(m => renderKetersediaanCard(m, 'mobil')).join('');
+            document.getElementById('motor-harga').innerHTML = data.motor.map(m => renderHargaCard(m, 'motor')).join('');
+            document.getElementById('mobil-harga').innerHTML = data.mobil.map(m => renderHargaCard(m, 'mobil')).join('');
         }
 
-        // Toggle Status
         function toggleStatus(id, element) {
             const card = element.closest('.vehicle-card');
             const isActive = element.classList.contains('active');
-            
             updateKetersediaan(id, !isActive);
             
             if (!isActive) {
@@ -720,66 +596,41 @@
             }
         }
 
-        // Save Price
         function savePrice(id) {
             const input = document.getElementById(`price-input-${id}`);
             const newPrice = parseInt(input.value);
-            
             if (newPrice > 0) {
                 updateHarga(id, newPrice);
                 document.getElementById(`price-display-${id}`).innerHTML = 
                     `Rp ${newPrice.toLocaleString('id-ID')}<span style="font-size: 0.8rem; font-weight: 500;">/hari</span>`;
                 showToast(`Harga berhasil diperbarui menjadi Rp ${newPrice.toLocaleString('id-ID')}`);
             } else {
-                showToast('Harga tidak valid!', 'error');
+                showToast('Harga tidak valid!');
             }
         }
 
-        // Share Availability
         function shareAvailability() {
             const data = getKendaraan();
-            const availableMotor = data.motor.filter(m => m.tersedia);
-            const availableMobil = data.mobil.filter(m => m.tersedia);
-            
-            let message = `🚗 *STATUS KETERSEDIAAN BAYANGTRANS*%0A`;
-            message += `━━━━━━━━━━━━━━━━━━━━%0A%0A`;
+            let message = `🚗 *STATUS KETERSEDIAAN BAYANGTRANS*%0A━━━━━━━━━━━━━━━━━━━━%0A%0A`;
             message += `🏍️ *MOTOR TERSEDIA:*%0A`;
-            availableMotor.forEach(m => {
+            data.motor.filter(m => m.tersedia).forEach(m => {
                 message += `• ${m.nama} - Rp ${m.harga.toLocaleString('id-ID')}/hari%0A`;
             });
             message += `%0A🚙 *MOBIL TERSEDIA:*%0A`;
-            availableMobil.forEach(m => {
+            data.mobil.filter(m => m.tersedia).forEach(m => {
                 message += `• ${m.nama} - Rp ${m.harga.toLocaleString('id-ID')}/hari%0A`;
             });
-            message += `%0A📞 Booking: wa.me/6281263860005%0A`;
-            message += `📍 Jln. Jodipati No.15A, Yogyakarta`;
-            
+            message += `%0A📞 Booking: wa.me/6281263860005%0A📍 Jln. Jodipati No.15A, Yogyakarta`;
             window.open(`https://wa.me/?text=${message}`, '_blank');
         }
 
-        // Toast Notification
-        function showToast(message, type = 'success') {
+        function showToast(message) {
             const toast = document.getElementById('toast');
             document.getElementById('toast-message').textContent = message;
-            
-            if (type === 'error') {
-                toast.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
-            } else {
-                toast.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-            }
-            
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        // Logout
-        function logout() {
-            if (confirm('Yakin ingin logout?')) {
-                window.location.href = '../index.html';
-            }
-        }
-
-        // Initialize
         renderAll();
     </script>
 
