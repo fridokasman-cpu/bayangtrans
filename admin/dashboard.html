@@ -667,44 +667,50 @@
         <span id="toast-message">Berhasil!</span>
     </div>
 
-    <script>
-        // ===== DATABASE DEFAULT (FALLBACK) =====
-        const defaultKendaraan = [
-            // Motor
-            { id: 1, nama: "Beat Old", tipe: "Motor", harga: 60000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
-            { id: 2, nama: "Beat New", tipe: "Motor", harga: 70000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
-            { id: 3, nama: "Beat Street", tipe: "Motor", harga: 75000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
-            { id: 4, nama: "All New Scoopy", tipe: "Motor", harga: 85000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
-            { id: 5, nama: "New Vario", tipe: "Motor", harga: 100000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
-            { id: 6, nama: "All-new Vario", tipe: "Motor", harga: 110000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
-            { id: 7, nama: "Stylo", tipe: "Motor", harga: 120000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
-            { id: 8, nama: "Nmax", tipe: "Motor", harga: 130000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
-            // Mobil
-            { id: 11, nama: "Avanza Grand", tipe: "Mobil", harga: 300000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
-            { id: 12, nama: "Mobilio", tipe: "Mobil", harga: 300000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
-            { id: 13, nama: "Ayla", tipe: "Mobil", harga: 275000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
-            { id: 14, nama: "Sigra", tipe: "Mobil", harga: 275000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
-            { id: 15, nama: "New Xenia", tipe: "Mobil", harga: 350000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
-            { id: 16, nama: "Inova Grand", tipe: "Mobil", harga: 400000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
-            { id: 17, nama: "Inova Reborn", tipe: "Mobil", harga: 550000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
-            { id: 18, nama: "Brio", tipe: "Mobil", harga: 300000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] }
-        ];
+   <script>
+    // ===== DATABASE DEFAULT (FALLBACK) =====
+    const defaultKendaraan = [
+        { id: 1, nama: "Beat Old", tipe: "Motor", harga: 60000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+        { id: 2, nama: "Beat New", tipe: "Motor", harga: 70000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+        { id: 3, nama: "Beat Street", tipe: "Motor", harga: 75000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+        { id: 4, nama: "All New Scoopy", tipe: "Motor", harga: 85000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+        { id: 5, nama: "New Vario", tipe: "Motor", harga: 100000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+        { id: 6, nama: "All-new Vario", tipe: "Motor", harga: 110000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+        { id: 7, nama: "Stylo", tipe: "Motor", harga: 120000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+        { id: 8, nama: "Nmax", tipe: "Motor", harga: 130000, tersedia: true, fitur: ["2 Helm", "Jas Hujan", "Bensin penuh"] },
+        { id: 11, nama: "Avanza Grand", tipe: "Mobil", harga: 300000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+        { id: 12, nama: "Mobilio", tipe: "Mobil", harga: 300000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+        { id: 13, nama: "Ayla", tipe: "Mobil", harga: 275000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+        { id: 14, nama: "Sigra", tipe: "Mobil", harga: 275000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+        { id: 15, nama: "New Xenia", tipe: "Mobil", harga: 350000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+        { id: 16, nama: "Inova Grand", tipe: "Mobil", harga: 400000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+        { id: 17, nama: "Inova Reborn", tipe: "Mobil", harga: 550000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] },
+        { id: 18, nama: "Brio", tipe: "Mobil", harga: 300000, tersedia: true, fitur: ["Bensin penuh", "Supir opsional", "Free car seat"] }
+    ];
 
-        // ===== STATE =====
-        let allKendaraan = [];
-        let allBookings = [];
-        let dataSource = 'localStorage';
-        let refreshInterval;
-        const API_BASE = '../api';
+    // ===== STATE =====
+    let allKendaraan = [];
+    let allBookings = [];
+    let refreshInterval;
+    const API_BASE = '../api';
 
-        // ===== INITIALIZATION =====
-        document.addEventListener('DOMContentLoaded', async () => {
-            // Cek login - gunakan localStorage untuk kompatibilitas
+    // ===== SAFETY: Pastikan loading hilang maksimal 5 detik =====
+    const safetyTimer = setTimeout(() => {
+        const overlay = document.getElementById('loadingOverlay');
+        if (overlay && !overlay.classList.contains('hidden')) {
+            overlay.classList.add('hidden');
+            console.warn('Loading force-hidden after 5 seconds');
+        }
+    }, 5000);
+
+    // ===== INITIALIZATION =====
+    document.addEventListener('DOMContentLoaded', async () => {
+        try {
+            // Cek login
             const isLoggedIn = sessionStorage.getItem('admin_logged_in') === 'true' || 
                               localStorage.getItem('admin_logged_in') === 'true';
             
             if (!isLoggedIn) {
-                // Jika belum login, redirect ke login
                 window.location.href = 'login.html';
                 return;
             }
@@ -716,329 +722,278 @@
             document.getElementById('admin-name').textContent = adminName;
             document.getElementById('welcome-name').textContent = adminName;
 
-            // Load data dengan timeout
-            await loadDashboard();
-            await loadRecentBookings();
+            // Load semua data (parallel untuk cepat)
+            await Promise.all([
+                loadKendaraan(),
+                loadBookings()
+            ]);
 
-            // Hide loading (dengan delay minimum agar smooth)
-            setTimeout(() => {
-                document.getElementById('loadingOverlay').classList.add('hidden');
-            }, 500);
+            // Hide loading
+            clearTimeout(safetyTimer);
+            document.getElementById('loadingOverlay').classList.add('hidden');
 
             // Auto refresh setiap 60 detik
-            refreshInterval = setInterval(async () => {
-                await loadDashboard();
-                await loadRecentBookings();
+            refreshInterval = setInterval(() => {
+                loadKendaraan();
+                loadBookings();
             }, 60000);
-        });
 
-        // ===== LOAD DATA =====
-        async function loadDashboard() {
-            try {
-                // Coba load dari API dulu (dengan timeout 3 detik)
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 3000);
-                
-                try {
-                    const response = await fetch(`${API_BASE}/kendaraan.php`, {
-                        signal: controller.signal
-                    });
-                    clearTimeout(timeoutId);
-                    
-                    if (response.ok) {
-                        const data = await response.json();
-                        if (Array.isArray(data) && data.length > 0) {
-                            allKendaraan = data;
-                            dataSource = 'MySQL Database';
-                            setDbStatus('online');
-                            document.getElementById('info-sumber-data').innerHTML = 
-                                'Data diambil dari <strong>MySQL Database</strong> (XAMPP). Real-time sync aktif.';
-                        } else {
-                            throw new Error('Data kosong');
-                        }
-                    } else {
-                        throw new Error('API error');
-                    }
-                } catch (apiError) {
-                    console.log('API tidak tersedia, menggunakan localStorage:', apiError.message);
-                    
-                    // Fallback ke localStorage
-                    const localData = localStorage.getItem('bayangtrans_kendaraan');
-                    if (localData) {
-                        const parsed = JSON.parse(localData);
-                        // Format data dari localStorage (objek motor & mobil)
-                        if (parsed.motor && parsed.mobil) {
-                            allKendaraan = [...parsed.motor, ...parsed.mobil];
-                        } else if (Array.isArray(parsed)) {
-                            allKendaraan = parsed;
-                        } else {
-                            allKendaraan = defaultKendaraan;
-                        }
-                        dataSource = 'localStorage';
-                        setDbStatus('offline');
-                        document.getElementById('info-sumber-data').innerHTML = 
-                            'Data diambil dari <strong>localStorage</strong> browser. Sinkronkan dengan database MySQL untuk fitur real-time.';
-                    } else {
-                        // Fallback terakhir: data default
-                        allKendaraan = defaultKendaraan;
-                        dataSource = 'Default (bawaan)';
-                        setDbStatus('offline');
-                        document.getElementById('info-sumber-data').innerHTML = 
-                            'Menggunakan <strong>data bawaan</strong>. Silakan atur kendaraan di menu Pengaturan.';
-                    }
-                }
-
-                updateStats();
-                filterVehicles();
-                
-            } catch (error) {
-                console.error('Load error:', error);
-                // Fallback ke data default
-                allKendaraan = defaultKendaraan;
-                dataSource = 'Default (bawaan)';
-                setDbStatus('error');
-                updateStats();
-                filterVehicles();
-                showToast('Menggunakan data default', 'warning');
-            }
+        } catch (error) {
+            console.error('Init error:', error);
+            clearTimeout(safetyTimer);
+            document.getElementById('loadingOverlay').classList.add('hidden');
+            showToast('Terjadi kesalahan: ' + error.message, 'error');
         }
+    });
 
-        // ===== LOAD RECENT BOOKINGS =====
-        async function loadRecentBookings() {
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 3000);
-                
-                try {
-                    const response = await fetch(`${API_BASE}/booking.php`, {
-                        signal: controller.signal,
-                        cache: 'no-store'
-                    });
-                    clearTimeout(timeoutId);
-                    
-                    if (response.ok) {
-                        const result = await response.json();
-                        
-                        if (result.success && result.data) {
-                            allBookings = result.data;
-                            renderRecentBookings();
-                            updateBookingStats();
-                        } else {
-                            throw new Error('Invalid response');
-                        }
-                    } else {
-                        throw new Error('API error');
-                    }
-                } catch (apiError) {
-                    console.log('Booking API tidak tersedia:', apiError.message);
-                    allBookings = [];
-                    renderRecentBookings();
-                    updateBookingStats();
-                }
-                
-            } catch (error) {
-                console.error('Load bookings error:', error);
-                allBookings = [];
-                renderRecentBookings();
-                updateBookingStats();
-            }
-        }
-
-        // ===== RENDER RECENT BOOKINGS =====
-        function renderRecentBookings() {
-            const container = document.getElementById('recent-bookings');
+    // ===== LOAD KENDARAAN =====
+    async function loadKendaraan() {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
             
-            if (allBookings.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-inbox"></i>
-                        <p>Belum ada booking</p>
-                        <p style="font-size: 0.85rem; margin-top: 5px;">Booking dari pelanggan akan muncul di sini</p>
-                    </div>
-                `;
-                return;
-            }
+            const response = await fetch(`${API_BASE}/kendaraan.php`, {
+                signal: controller.signal,
+                cache: 'no-store'
+            });
+            clearTimeout(timeoutId);
             
-            // Ambil 5 booking terbaru
-            const recent = allBookings.slice(0, 5);
+            if (!response.ok) throw new Error('HTTP ' + response.status);
             
-            container.innerHTML = recent.map(booking => {
-                const statusClass = getStatusClass(booking.status);
-                const statusText = booking.status;
-                
-                return `
-                    <div class="booking-item">
-                        <div class="booking-item-icon">
-                            <i class="fas fa-clipboard-list"></i>
-                        </div>
-                        <div class="booking-item-info">
-                            <h4>${booking.nama}</h4>
-                            <p>${booking.kendaraan_nama} • ${formatDateShort(booking.tgl_mulai)} - ${formatDateShort(booking.tgl_selesai)}</p>
-                        </div>
-                        <span class="status-badge ${statusClass}">${statusText}</span>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // ===== GET STATUS CLASS =====
-        function getStatusClass(status) {
-            const statusMap = {
-                'Pending': 'status-pending',
-                'DP Diterima': 'status-dp-diterima',
-                'Aktif': 'status-aktif',
-                'Selesai': 'status-selesai',
-                'Batal': 'status-batal'
-            };
-            return statusMap[status] || 'status-pending';
-        }
-
-        // ===== UPDATE BOOKING STATS =====
-        function updateBookingStats() {
-            document.getElementById('total-booking').textContent = allBookings.length;
-            document.getElementById('booking-pending').textContent = 
-                allBookings.filter(b => b.status === 'Pending').length;
-        }
-
-        // ===== FORMAT DATE SHORT =====
-        function formatDateShort(dateStr) {
-            const options = { day: 'numeric', month: 'short' };
-            return new Date(dateStr).toLocaleDateString('id-ID', options);
-        }
-
-        // ===== SET DB STATUS =====
-        function setDbStatus(status) {
-            const dbStatus = document.getElementById('dbStatus');
-            const dataSourceEl = document.getElementById('data-source');
+            const data = await response.json();
             
-            dbStatus.classList.remove('online', 'offline', 'error');
+            // Support 2 format: array langsung atau {success, data}
+            let kendaraanData = Array.isArray(data) ? data : (data.data || []);
             
-            if (status === 'online') {
-                dbStatus.classList.add('online');
-                dbStatus.textContent = 'MySQL Connected';
-                if (dataSourceEl) dataSourceEl.textContent = 'Data dari MySQL';
-            } else if (status === 'offline') {
-                dbStatus.classList.add('offline');
-                dbStatus.textContent = 'Offline Mode';
-                if (dataSourceEl) dataSourceEl.textContent = 'Data dari localStorage';
+            if (kendaraanData.length > 0) {
+                allKendaraan = kendaraanData;
+                setDbStatus('online');
+                document.getElementById('info-sumber-data').innerHTML = 
+                    'Data diambil dari <strong>MySQL Database</strong> (XAMPP). Real-time sync aktif. ✅';
             } else {
-                dbStatus.classList.add('error');
-                dbStatus.textContent = 'Error';
-                if (dataSourceEl) dataSourceEl.textContent = 'Data default';
+                throw new Error('Data kosong');
             }
+        } catch (error) {
+            console.log('API kendaraan error:', error.message);
+            allKendaraan = defaultKendaraan;
+            setDbStatus('offline');
+            document.getElementById('info-sumber-data').innerHTML = 
+                '⚠️ Menggunakan <strong>data default</strong>. Cek XAMPP dan file api/kendaraan.php';
         }
+        
+        updateStats();
+        filterVehicles();
+    }
 
-        // ===== UPDATE STATISTICS =====
-        function updateStats() {
-            const motor = allKendaraan.filter(k => k.tipe === 'Motor');
-            const mobil = allKendaraan.filter(k => k.tipe === 'Mobil');
+    // ===== LOAD BOOKINGS =====
+    async function loadBookings() {
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
             
-            document.getElementById('total-motor').textContent = motor.length;
-            document.getElementById('total-mobil').textContent = mobil.length;
-            document.getElementById('total-kendaraan').textContent = allKendaraan.length;
-            document.getElementById('motor-tersedia').textContent = motor.filter(m => m.tersedia).length;
-            document.getElementById('mobil-tersedia').textContent = mobil.filter(m => m.tersedia).length;
+            const response = await fetch(`${API_BASE}/booking.php`, {
+                signal: controller.signal,
+                cache: 'no-store'
+            });
+            clearTimeout(timeoutId);
             
-            // Hitung potensi pendapatan per hari
-            const totalPerHari = allKendaraan.reduce((sum, k) => sum + k.harga, 0);
-            document.getElementById('potensi-pendapatan').textContent = 
-                'Rp ' + totalPerHari.toLocaleString('id-ID');
+            if (!response.ok) throw new Error('HTTP ' + response.status);
+            
+            const result = await response.json();
+            
+            if (result.success && result.data) {
+                allBookings = result.data;
+            } else {
+                allBookings = [];
+            }
+        } catch (error) {
+            console.log('API booking error:', error.message);
+            allBookings = [];
         }
+        
+        renderRecentBookings();
+        updateBookingStats();
+    }
 
-        // ===== FILTER & RENDER VEHICLES =====
-        function filterVehicles() {
-            const filter = document.getElementById('filterType').value;
-            let filtered = [...allKendaraan];
-            
-            if (filter === 'Motor') filtered = allKendaraan.filter(k => k.tipe === 'Motor');
-            else if (filter === 'Mobil') filtered = allKendaraan.filter(k => k.tipe === 'Mobil');
-            else if (filter === 'tersedia') filtered = allKendaraan.filter(k => k.tersedia);
-            else if (filter === 'tidak') filtered = allKendaraan.filter(k => !k.tersedia);
-            
-            renderVehicleList(filtered);
+    // ===== RENDER RECENT BOOKINGS =====
+    function renderRecentBookings() {
+        const container = document.getElementById('recent-bookings');
+        if (!container) return;
+        
+        if (allBookings.length === 0) {
+            container.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-inbox"></i>
+                    <p>Belum ada booking</p>
+                    <p style="font-size: 0.85rem; margin-top: 5px;">Booking dari pelanggan akan muncul di sini</p>
+                </div>
+            `;
+            return;
         }
+        
+        const recent = allBookings.slice(0, 5);
+        container.innerHTML = recent.map(booking => `
+            <div class="vehicle-item" style="background: #fffbeb; border-left: 4px solid #f59e0b;">
+                <div class="vehicle-item-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <div class="vehicle-item-info">
+                    <h4>${booking.nama}</h4>
+                    <p>${booking.kendaraan_nama} • ${formatDateShort(booking.tgl_mulai)}</p>
+                </div>
+                <span class="status-badge ${getStatusClass(booking.status)}">${booking.status}</span>
+            </div>
+        `).join('');
+    }
 
-        function renderVehicleList(vehicles) {
-            const vehicleList = document.getElementById('vehicle-list');
-            
-            if (vehicles.length === 0) {
-                vehicleList.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-inbox"></i>
-                        <p>Tidak ada kendaraan ditemukan</p>
+    function getStatusClass(status) {
+        const map = {
+            'Pending': 'status-pending',
+            'DP Diterima': 'status-dp-diterima',
+            'Aktif': 'status-aktif',
+            'Selesai': 'status-selesai',
+            'Batal': 'status-batal'
+        };
+        return map[status] || 'status-pending';
+    }
+
+    function updateBookingStats() {
+        const totalEl = document.getElementById('total-booking');
+        const pendingEl = document.getElementById('booking-pending');
+        if (totalEl) totalEl.textContent = allBookings.length;
+        if (pendingEl) pendingEl.textContent = allBookings.filter(b => b.status === 'Pending').length;
+    }
+
+    function formatDateShort(dateStr) {
+        if (!dateStr) return '-';
+        try {
+            return new Date(dateStr).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
+        } catch {
+            return dateStr;
+        }
+    }
+
+    // ===== SET DB STATUS =====
+    function setDbStatus(status) {
+        const dbStatus = document.getElementById('dbStatus');
+        const dataSourceEl = document.getElementById('data-source');
+        
+        dbStatus.classList.remove('online', 'offline', 'error');
+        
+        if (status === 'online') {
+            dbStatus.classList.add('online');
+            dbStatus.textContent = 'MySQL Connected';
+            if (dataSourceEl) dataSourceEl.textContent = 'Data dari MySQL';
+        } else if (status === 'offline') {
+            dbStatus.classList.add('offline');
+            dbStatus.textContent = 'Offline Mode';
+            if (dataSourceEl) dataSourceEl.textContent = 'Data default';
+        } else {
+            dbStatus.classList.add('error');
+            dbStatus.textContent = 'Error';
+            if (dataSourceEl) dataSourceEl.textContent = 'Error';
+        }
+    }
+
+    // ===== UPDATE STATISTICS =====
+    function updateStats() {
+        const motor = allKendaraan.filter(k => k.tipe === 'Motor');
+        const mobil = allKendaraan.filter(k => k.tipe === 'Mobil');
+        
+        document.getElementById('total-motor').textContent = motor.length;
+        document.getElementById('total-mobil').textContent = mobil.length;
+        document.getElementById('total-kendaraan').textContent = allKendaraan.length;
+        document.getElementById('motor-tersedia').textContent = motor.filter(m => m.tersedia).length;
+        document.getElementById('mobil-tersedia').textContent = mobil.filter(m => m.tersedia).length;
+        
+        const totalPerHari = allKendaraan.reduce((sum, k) => sum + (k.harga || 0), 0);
+        document.getElementById('potensi-pendapatan').textContent = 'Rp ' + totalPerHari.toLocaleString('id-ID');
+    }
+
+    // ===== FILTER & RENDER VEHICLES =====
+    function filterVehicles() {
+        const filter = document.getElementById('filterType').value;
+        let filtered = [...allKendaraan];
+        
+        if (filter === 'Motor') filtered = allKendaraan.filter(k => k.tipe === 'Motor');
+        else if (filter === 'Mobil') filtered = allKendaraan.filter(k => k.tipe === 'Mobil');
+        else if (filter === 'tersedia') filtered = allKendaraan.filter(k => k.tersedia);
+        else if (filter === 'tidak') filtered = allKendaraan.filter(k => !k.tersedia);
+        
+        renderVehicleList(filtered);
+    }
+
+    function renderVehicleList(vehicles) {
+        const vehicleList = document.getElementById('vehicle-list');
+        if (!vehicleList) return;
+        
+        if (vehicles.length === 0) {
+            vehicleList.innerHTML = `<div class="empty-state"><i class="fas fa-inbox"></i><p>Tidak ada kendaraan</p></div>`;
+            return;
+        }
+        
+        vehicleList.innerHTML = vehicles.map(item => {
+            const isMotor = item.tipe === 'Motor';
+            return `
+                <div class="vehicle-item ${isMotor ? 'motor' : 'mobil'}">
+                    <div class="vehicle-item-icon">
+                        <i class="fas ${isMotor ? 'fa-motorcycle' : 'fa-car'}"></i>
                     </div>
-                `;
-                return;
-            }
-            
-            vehicleList.innerHTML = vehicles.map(item => {
-                const isMotor = item.tipe === 'Motor';
-                return `
-                    <div class="vehicle-item ${isMotor ? 'motor' : 'mobil'}">
-                        <div class="vehicle-item-icon">
-                            <i class="fas ${isMotor ? 'fa-motorcycle' : 'fa-car'}"></i>
-                        </div>
-                        <div class="vehicle-item-info">
-                            <h4>${item.nama}</h4>
-                            <p>Rp ${item.harga.toLocaleString('id-ID')}/hari • ${item.tipe}</p>
-                        </div>
-                        <span class="status-badge ${item.tersedia ? 'status-available' : 'status-unavailable'}">
-                            ${item.tersedia ? '✓ Tersedia' : '✗ Tidak'}
-                        </span>
+                    <div class="vehicle-item-info">
+                        <h4>${item.nama}</h4>
+                        <p>Rp ${(item.harga || 0).toLocaleString('id-ID')}/hari • ${item.tipe}</p>
                     </div>
-                `;
-            }).join('');
-        }
+                    <span class="status-badge ${item.tersedia ? 'status-available' : 'status-unavailable'}">
+                        ${item.tersedia ? '✓ Tersedia' : '✗ Tidak'}
+                    </span>
+                </div>
+            `;
+        }).join('');
+    }
 
-        // ===== REFRESH DATA =====
-        async function refreshData() {
-            const btn = document.getElementById('btnRefresh');
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Refreshing...';
-            
-            await loadDashboard();
-            await loadRecentBookings();
-            
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh Data';
-                showToast('Data berhasil di-refresh!', 'success');
-            }, 500);
-        }
+    // ===== REFRESH =====
+    async function refreshData() {
+        const btn = document.getElementById('btnRefresh');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> Refreshing...';
+        
+        await Promise.all([loadKendaraan(), loadBookings()]);
+        
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-sync-alt"></i> Refresh Data';
+            showToast('Data berhasil di-refresh!', 'success');
+        }, 500);
+    }
 
-        // ===== LOGOUT =====
-        function doLogout() {
-            if (confirm('Yakin ingin logout?')) {
-                if (refreshInterval) clearInterval(refreshInterval);
-                sessionStorage.removeItem('admin_logged_in');
-                sessionStorage.removeItem('admin_username');
-                sessionStorage.removeItem('admin_name');
-                localStorage.removeItem('admin_logged_in');
-                localStorage.removeItem('admin_name');
-                window.location.href = 'login.html';
-            }
-        }
-
-        // ===== TOAST NOTIFICATION =====
-        function showToast(message, type = 'success') {
-            const toast = document.getElementById('toast');
-            const icon = toast.querySelector('i');
-            document.getElementById('toast-message').textContent = message;
-            
-            toast.className = `toast ${type}`;
-            icon.className = type === 'success' ? 'fas fa-check-circle' : 
-                            type === 'error' ? 'fas fa-exclamation-circle' : 
-                            'fas fa-exclamation-triangle';
-            
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        }
-
-        // ===== CLEANUP =====
-        window.addEventListener('beforeunload', () => {
+    // ===== LOGOUT =====
+    function doLogout() {
+        if (confirm('Yakin ingin logout?')) {
             if (refreshInterval) clearInterval(refreshInterval);
-        });
-    </script>
+            sessionStorage.clear();
+            localStorage.removeItem('admin_logged_in');
+            localStorage.removeItem('admin_name');
+            window.location.href = 'login.html';
+        }
+    }
 
-</body>
-</html>
+    // ===== TOAST =====
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toast');
+        const icon = toast.querySelector('i');
+        document.getElementById('toast-message').textContent = message;
+        
+        toast.className = `toast ${type}`;
+        icon.className = type === 'success' ? 'fas fa-check-circle' : 
+                        type === 'error' ? 'fas fa-exclamation-circle' : 
+                        'fas fa-exclamation-triangle';
+        
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // ===== CLEANUP =====
+    window.addEventListener('beforeunload', () => {
+        if (refreshInterval) clearInterval(refreshInterval);
+    });
+</script>
