@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Kendaraan - BayangTrans</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        .page-header { padding: 150px 0 80px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; text-align: center; }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        
+        .booking-section { padding: 80px 0; background: var(--light-gray); }
+        .booking-container { max-width: 700px; margin: 0 auto; background: white; padding: 40px; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+        
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark); }
+        .form-group label span { color: #ef4444; }
+        
+        .form-control {
+            width: 100%; padding: 12px 15px; border: 2px solid #e5e7eb; border-radius: var(--radius);
+            font-family: 'Poppins', sans-serif; font-size: 1rem; transition: var(--transition);
+        }
+        .form-control:focus { outline: none; border-color: var(--primary); }
+        textarea.form-control { resize: vertical; min-height: 100px; }
+        
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        
+        .btn-submit {
+            width: 100%; padding: 15px; background: var(--whatsapp); color: white; border: none;
+            border-radius: 50px; font-size: 1.1rem; font-weight: 700; cursor: pointer;
+            transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .btn-submit:hover { background: #128C7E; transform: translateY(-2px); }
+
+        @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } .booking-container { padding: 25px; } }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo"><span class="logo-text">Bayang<span>Trans</span></span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="kendaraan.html">Kendaraan</a></li>
+                <li><a href="booking.html" class="active">Booking</a></li>
+                <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
+            <a href="https://wa.me/6281263860005" class="nav-cta" target="_blank"><i class="fab fa-whatsapp"></i> Hubungi Kami</a>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Form Booking</h1>
+            <p>Isi data di bawah ini, kami akan segera mengkonfirmasi via WhatsApp</p>
+        </div>
+    </section>
+
+    <section class="booking-section">
+        <div class="container">
+            <div class="booking-container fade-in">
+                <form id="booking-form">
+                    <div class="form-group">
+                        <label>Nama Lengkap <span>*</span></label>
+                        <input type="text" id="nama" class="form-control" placeholder="Masukkan nama Anda" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Nomor WhatsApp <span>*</span></label>
+                        <input type="tel" id="wa" class="form-control" placeholder="Contoh: 08123456789" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Pilih Kendaraan <span>*</span></label>
+                        <select id="kendaraan-select" class="form-control" required>
+                            <option value="">-- Pilih Kendaraan --</option>
+                            <!-- Opsi akan di-load dari JSON -->
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tanggal Mulai <span>*</span></label>
+                            <input type="date" id="tgl-mulai" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Selesai <span>*</span></label>
+                            <input type="date" id="tgl-selesai" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Catatan Tambahan</label>
+                        <textarea id="catatan" class="form-control" placeholder="Contoh: Antar ke Bandara Adisucipto jam 10 pagi"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <i class="fab fa-whatsapp"></i> Kirim Booking via WhatsApp
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container" style="text-align:center;"><p>&copy; 2024 BayangTrans. All rights reserved.</p></div>
+    </footer>
+
+    <a href="https://wa.me/6281263860005" class="floating-wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+    <script src="js/main.js"></script>
+    <script src="js/booking.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Kendaraan - BayangTrans</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        /* Page Specific Styles */
+        .page-header {
+            padding: 150px 0 80px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            text-align: center;
+        }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .page-header p { font-size: 1.1rem; opacity: 0.9; }
+        
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            padding: 10px 25px;
+            border: 2px solid var(--primary);
+            background: transparent;
+            color: var(--primary);
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+        }
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+        .vehicle-features {
+            list-style: none;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        .vehicle-features li { margin-bottom: 5px; }
+        .vehicle-features i { color: var(--success); margin-right: 8px; }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR (Sama seperti index.html) -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-text">Bayang<span>Trans</span></span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="kendaraan.html" class="active">Kendaraan</a></li>
+                <li><a href="booking.html">Booking</a></li>
+                <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
+            <a href="https://wa.me/6281263860005" class="nav-cta" target="_blank"><i class="fab fa-whatsapp"></i> Hubungi Kami</a>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Pilihan Kendaraan Kami</h1>
+            <p>Temukan motor atau mobil terbaik untuk petualangan Anda di Jogja</p>
+        </div>
+    </section>
+
+    <!-- KENDARAAN LIST -->
+    <section class="popular-section" style="padding-top: 50px;">
+        <div class="container">
+            <div class="filter-container">
+                <button class="filter-btn active" data-filter="all">Semua</button>
+                <button class="filter-btn" data-filter="Motor">Motor</button>
+                <button class="filter-btn" data-filter="Mobil">Mobil</button>
+            </div>
+            <div class="popular-grid" id="kendaraan-grid">
+                <!-- Data akan di-load dari kendaraan.json via JS -->
+                <p style="text-align:center; width:100%;">Memuat kendaraan...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (Sama seperti index.html, disederhanakan) -->
+    <footer class="footer">
+        <div class="container" style="text-align:center;">
+            <p>&copy; 2024 BayangTrans. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/6281263860005" class="floating-wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
+
+    <script src="js/main.js"></script>
+    <script src="js/kendaraan.js"></script>
+</body>
+</html>

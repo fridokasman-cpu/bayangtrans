@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontak Kami - BayangTrans</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        .page-header { padding: 150px 0 80px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; text-align: center; }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        
+        .contact-section { padding: 80px 0; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        
+        .contact-info { background: white; padding: 40px; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+        .contact-item { display: flex; gap: 20px; margin-bottom: 30px; align-items: flex-start; }
+        .contact-icon { width: 50px; height: 50px; background: var(--light-gray); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--primary); flex-shrink: 0; }
+        .contact-details h3 { font-size: 1.1rem; margin-bottom: 5px; }
+        .contact-details p, .contact-details a { color: var(--gray); text-decoration: none; line-height: 1.6; }
+        .contact-details a:hover { color: var(--primary); }
+
+        .map-container { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); height: 100%; min-height: 400px; }
+        .map-container iframe { width: 100%; height: 100%; border: 0; }
+
+        @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } .map-container { min-height: 300px; } }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo"><span class="logo-text">Bayang<span>Trans</span></span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="kendaraan.html">Kendaraan</a></li>
+                <li><a href="booking.html">Booking</a></li>
+                <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="kontak.html" class="active">Kontak</a></li>
+            </ul>
+            <a href="https://wa.me/6281263860005" class="nav-cta" target="_blank"><i class="fab fa-whatsapp"></i> Hubungi Kami</a>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Hubungi Kami</h1>
+            <p>Punya pertanyaan? Kami siap membantu Anda!</p>
+        </div>
+    </section>
+
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-grid">
+                <!-- Info Kontak -->
+                <div class="contact-info fade-in">
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="contact-details">
+                            <h3>Alamat Kantor</h3>
+                            <p>Jln. Jodipati No.15A,<br>Yogyakarta, Indonesia</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fab fa-whatsapp"></i></div>
+                        <div class="contact-details">
+                            <h3>WhatsApp / Telepon</h3>
+                            <a href="https://wa.me/6281263860005" target="_blank">+62 812-6386-0005</a>
+                            <p style="font-size: 0.85rem; margin-top: 2px;">(Fast Response 24 Jam)</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fab fa-instagram"></i></div>
+                        <div class="contact-details">
+                            <h3>Instagram</h3>
+                            <a href="https://instagram.com/bayangtrans" target="_blank">@bayangtrans</a>
+                            <p style="font-size: 0.85rem; margin-top: 2px;">Follow untuk info promo terbaru!</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                        <div class="contact-details">
+                            <h3>Jam Operasional</h3>
+                            <p>Senin - Minggu: 08.00 - 21.00 WIB</p>
+                            <p style="font-size: 0.85rem; margin-top: 2px;">Booking via WA bisa 24 jam</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Maps -->
+                <div class="map-container fade-in">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.07123456789!2d110.366!3d-7.782!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zN8KwNDYnNTUuMiJTIDExMMKwMjEnNTcuNiJF!5e0!3m2!1sid!2sid!4v1600000000000!5m2!1sid!2sid" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container" style="text-align:center;"><p>&copy; 2024 BayangTrans. All rights reserved.</p></div>
+    </footer>
+
+    <a href="https://wa.me/6281263860005" class="floating-wa" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Kami - BayangTrans</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        .page-header { padding: 150px 0 80px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; text-align: center; }
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        
+        .about-section { padding: 80px 0; }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+        .about-img { width: 100%; height: 400px; background: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80') center/cover; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+        .about-text h2 { font-size: 2rem; margin-bottom: 20px; color: var(--primary); }
+        .about-text p { margin-bottom: 15px; color: var(--gray); line-height: 1.8; }
+
+        .vision-mission { padding: 80px 0; background: var(--light-gray); }
+        .vm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .vm-card { background: white; padding: 40px; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+        .vm-card h3 { color: var(--primary); margin-bottom: 15px; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+        .vm-card ul { list-style: none; }
+        .vm-card ul li { margin-bottom: 10px; display: flex; align-items: start; gap: 10px; color: var(--gray); }
+        .vm-card ul li i { color: var(--accent); margin-top: 5px; }
+
+        @media (max-width: 768px) { .about-grid, .vm-grid { grid-template-columns: 1fr; } .about-img { height: 250px; } }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo"><span class="logo-text">Bayang<span>Trans</span></span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="kendaraan.html">Kendaraan</a></li>
+                <li><a href="booking.html">Booking</a></li>
+                <li><a href="tentang.html" class="active">Tentang</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
+            <a href="https://wa.me/6281263860005" class="nav-cta" target="_blank"><i class="fab fa-whatsapp"></i> Hubungi Kami</a>
+            <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+        </div>
+    </nav>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Tentang BayangTrans</h1>
+            <p>Mitra perjalanan
