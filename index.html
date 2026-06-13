@@ -823,21 +823,73 @@
         </div>
     </section>
 
-    <!-- KENDARAAN POPULER (DYNAMIC - dari localStorage) -->
-    <section class="popular-section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">Paling Diminati</span>
-                <h2 class="section-title">Kendaraan Populer</h2>
+   <!-- KENDARAAN POPULER -->
+<section class="popular-section">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-subtitle">Paling Diminati</span>
+            <h2 class="section-title">Kendaraan Populer</h2>
+        </div>
+        <div class="popular-grid">
+            <!-- NMAX -->
+            <div class="vehicle-card fade-in">
+                <div class="vehicle-badge">Motor</div>
+                <div class="vehicle-img" style="background: url('assets/images/kendaraan/nmax.jpg') center/cover;"></div>
+                <div class="vehicle-info">
+                    <h3>Yamaha NMAX</h3>
+                    <div class="vehicle-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <span>(4.9)</span>
+                    </div>
+                    <div class="vehicle-price">
+                        <span class="price">Rp 80.000</span>
+                        <span class="period">/hari</span>
+                    </div>
+                    <a href="booking.html?kendaraan=Yamaha+NMAX" class="btn-book">Book Sekarang</a>
+                </div>
             </div>
-            <div class="popular-grid" id="popular-vehicles">
-                <!-- Akan di-generate oleh JavaScript dari localStorage -->
+
+            <!-- Vario -->
+            <div class="vehicle-card fade-in">
+                <div class="vehicle-badge">Motor</div>
+                <div class="vehicle-img" style="background: url('assets/images/kendaraan/vario.jpg') center/cover;"></div>
+                <div class="vehicle-info">
+                    <h3>Honda Vario 160</h3>
+                    <div class="vehicle-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        <span>(4.7)</span>
+                    </div>
+                    <div class="vehicle-price">
+                        <span class="price">Rp 70.000</span>
+                        <span class="period">/hari</span>
+                    </div>
+                    <a href="booking.html?kendaraan=Honda+Vario+160" class="btn-book">Book Sekarang</a>
+                </div>
             </div>
-            <div class="view-all">
-                <a href="kendaraan.html" class="btn-outline">Lihat Semua Kendaraan <i class="fas fa-arrow-right"></i></a>
+
+            <!-- Avanza -->
+            <div class="vehicle-card fade-in">
+                <div class="vehicle-badge popular">Mobil</div>
+                <div class="vehicle-img" style="background: url('assets/images/kendaraan/avanza.jpg') center/cover;"></div>
+                <div class="vehicle-info">
+                    <h3>Toyota Avanza</h3>
+                    <div class="vehicle-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        <span>(4.8)</span>
+                    </div>
+                    <div class="vehicle-price">
+                        <span class="price">Rp 350.000</span>
+                        <span class="period">/hari</span>
+                    </div>
+                    <a href="booking.html?kendaraan=Toyota+Avanza" class="btn-book">Book Sekarang</a>
+                </div>
             </div>
         </div>
-    </section>
+        <div class="view-all">
+            <a href="kendaraan.html" class="btn btn-outline">Lihat Semua Kendaraan <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
 
     <!-- PROMO BANNER -->
     <section class="promo-banner">
